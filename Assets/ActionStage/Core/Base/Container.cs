@@ -1,18 +1,29 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ActionStage.Core.Base
 {
     public abstract class Container<TValue>
     {
-        private Transform _root;
+        private static Transform _root;
         private protected readonly Dictionary<string, TValue> _container = new Dictionary<string, TValue>();
 
         public int Count => _container.Keys.Count;
         public Dictionary<string, TValue> All => new (_container);
 
-        
-        public Transform Root()
+        public void ClearNull()
+        {
+            var selected = _container.Where(w => w.Value == null)
+                .Select(s => s.Key);
+
+            foreach (var key in selected)
+            {
+                Remove(key);
+            }
+        }
+
+        protected Transform Root()
         {
             if (_root == null)
             {

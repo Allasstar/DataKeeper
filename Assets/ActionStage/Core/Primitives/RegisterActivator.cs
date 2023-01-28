@@ -1,24 +1,11 @@
 using System;
-using System.Linq;
 using ActionStage.Core.Base;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace ActionStage.Core.Primitives
 {
     public class RegisterActivator<TValue> : Container<TValue>
     {
-        public void ClearNull()
-        {
-            var selected = _container.Where(w => w.Value == null)
-                .Select(s => s.Key);
-
-            foreach (var key in selected)
-            {
-                Remove(key);
-            }
-        }
-        
         public void Instantiate<T>(string id) where T : TValue
         {
             var instance = Activator.CreateInstance<T>();
