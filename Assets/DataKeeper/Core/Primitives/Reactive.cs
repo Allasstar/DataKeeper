@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace ActionStage.Core.Primitives
+namespace DataKeeper.Core.Primitives
 {
     [Serializable]
     public class Reactive<T>

@@ -1,8 +1,8 @@
-using ActionStage.Core.Base;
-using ActionStage.Core.Primitives;
+using DataKeeper.Core.Base;
+using DataKeeper.Core.Primitives;
 using UnityEngine;
 
-namespace ActionStage
+namespace Test.Example
 {
     public static class Model
     {

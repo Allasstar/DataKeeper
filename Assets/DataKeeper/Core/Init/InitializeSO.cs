@@ -1,7 +1,7 @@
-using ActionStage.Core.Base;
+using DataKeeper.Core.Base;
 using UnityEngine;
 
-namespace ActionStage.Core.Init
+namespace DataKeeper.Core.Init
 {
     public class InitializeSO
     {

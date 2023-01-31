@@ -1,6 +1,6 @@
-using ActionStage.Core.Base;
+using DataKeeper.Core.Base;
 
-namespace ActionStage.Core.Primitives
+namespace DataKeeper.Core.Primitives
 {
     public class Register<TValue> : Container<TValue>
     {

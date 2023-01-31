@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ActionStage.Core.Extensions
+namespace DataKeeper.Core.Extensions
 {
     public static class Vector3Extension
     {

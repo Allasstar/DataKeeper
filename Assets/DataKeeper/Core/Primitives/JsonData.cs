@@ -2,7 +2,7 @@ using System;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace ActionStage.Core.Primitives
+namespace DataKeeper.Core.Primitives
 {
     public class JsonData<T>
     {

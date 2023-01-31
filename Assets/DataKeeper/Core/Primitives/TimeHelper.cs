@@ -1,6 +1,6 @@
 using System;
 
-namespace ActionStage.Core.Primitives
+namespace DataKeeper.Core.Primitives
 {
     public static class TimeHelper
     {

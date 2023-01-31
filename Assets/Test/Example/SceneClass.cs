@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace ActionStage
+namespace Test.Example
 {
     public class SceneClass : MonoBehaviour
     {

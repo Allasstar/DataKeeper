@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace ActionStage.Core.Primitives
+namespace DataKeeper.Core.Primitives
 {
     [Serializable]
     public class ComponentId

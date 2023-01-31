@@ -1,6 +1,6 @@
 using System.Collections.Concurrent;
 
-namespace ActionStage.Core.Primitives
+namespace DataKeeper.Core.Primitives
 {
     public class QueueFixedSized<T> : ConcurrentQueue<T>
     {

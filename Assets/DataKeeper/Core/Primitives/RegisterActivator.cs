@@ -1,8 +1,8 @@
 using System;
-using ActionStage.Core.Base;
+using DataKeeper.Core.Base;
 using UnityEngine;
 
-namespace ActionStage.Core.Primitives
+namespace DataKeeper.Core.Primitives
 {
     public class RegisterActivator<TValue> : Container<TValue>
     {

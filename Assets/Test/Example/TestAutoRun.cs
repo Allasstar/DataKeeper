@@ -1,8 +1,7 @@
-using System;
-using ActionStage.Core.Primitives;
+using DataKeeper.Core.Primitives;
 using UnityEngine;
 
-namespace ActionStage
+namespace Test.Example
 {
     public class TestAutoRun : MonoBehaviour
     {

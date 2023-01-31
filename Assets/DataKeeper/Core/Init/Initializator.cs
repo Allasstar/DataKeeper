@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ActionStage.Core.Init
+namespace DataKeeper.Core.Init
 {
     public static class Initializator
     {

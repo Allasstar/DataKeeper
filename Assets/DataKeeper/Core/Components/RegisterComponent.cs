@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using ActionStage.Core.Primitives;
+using DataKeeper.Core.Primitives;
 using UnityEngine;
 
-namespace ActionStage.Core.Components
+namespace DataKeeper.Core.Components
 {
     [DefaultExecutionOrder(-10000)]
     public class RegisterComponent : MonoBehaviour

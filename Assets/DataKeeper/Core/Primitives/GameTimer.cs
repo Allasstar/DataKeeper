@@ -1,10 +1,10 @@
 using System;
-using ActionStage.Core.ActEngine;
+using DataKeeper.Core.ActEngine;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace ActionStage.Core.Primitives
+namespace DataKeeper.Core.Primitives
 {
     public class GameTimer : JsonData<GameTimer>, IDisposable
     {

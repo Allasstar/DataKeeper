@@ -1,4 +1,4 @@
-﻿namespace ActionStage.Core.ActEngine
+﻿namespace DataKeeper.Core.ActEngine
 {
     public static class Lerp
     {

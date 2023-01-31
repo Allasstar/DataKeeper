@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ActionStage.Core.Primitives;
 using Random = System.Random;
 
-namespace ActionStage.Core.Extensions
+namespace DataKeeper.Core.Extensions
 {
    public static class ListExtension
    {

@@ -1,7 +1,7 @@
-using ActionStage.Core.Base;
+using DataKeeper.Core.Base;
 using UnityEngine;
 
-namespace ActionStage
+namespace Test.Example
 {
     [CreateAssetMenu(fileName = "SO", menuName = "Test ActionStage/SO 2", order = 1)]
     public class Test2SO : SOBase

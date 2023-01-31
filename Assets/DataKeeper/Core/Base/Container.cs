@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace ActionStage.Core.Base
+namespace DataKeeper.Core.Base
 {
     public abstract class Container<TValue>
     {
