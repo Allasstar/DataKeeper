@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using DataKeeper.Extra;
 using DataKeeper.Generic;
 using UnityEngine;
 
@@ -8,7 +8,7 @@ namespace DataKeeper.Components
     [DefaultExecutionOrder(-10000)]
     public class RegisterComponent : MonoBehaviour
     {
-        public static Register<Component> Components = new();
+        public static Register<Component> Components = new ();
 
         private static int _scene = -1; 
 
@@ -26,6 +26,13 @@ namespace DataKeeper.Components
             {
                 Components.Reg(c.component, c.id);
             }
+        }
+        
+        [Serializable]
+        public class ComponentId
+        {
+            public string id;
+            public Component component;
         }
     }
 }
