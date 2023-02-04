@@ -18,9 +18,6 @@ namespace DataKeeper.Generic
         [NonSerialized]
         public UnityEvent<T> OnValueChanged = new UnityEvent<T>();
     
-        [NonSerialized]
-        public UnityEvent Event = new UnityEvent();
-    
         public ReactivePref(T defaultValue, string key)
         {
             this.Key = key;

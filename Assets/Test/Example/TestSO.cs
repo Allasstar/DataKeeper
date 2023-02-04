@@ -6,7 +6,6 @@ using DataKeeper.Extra.ActCore;
 using DataKeeper.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 namespace Test.Example
