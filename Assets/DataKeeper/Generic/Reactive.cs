@@ -13,10 +13,12 @@ namespace DataKeeper.Generic
     
         [NonSerialized]
         public UnityEvent<T> OnValueChanged = new UnityEvent<T>();
-    
-        [NonSerialized]
-        public UnityEvent Event = new UnityEvent();
-    
+
+        public static implicit operator T(Reactive<T> instance)
+        {
+            return instance.value;
+        }
+        
         public Reactive()
         {
             this.value = default(T);
