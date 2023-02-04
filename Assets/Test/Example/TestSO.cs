@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using DataKeeper.Attributes;
 using DataKeeper.Base;
 using DataKeeper.Extra.ActCore;
 using UnityEngine;
@@ -9,6 +11,15 @@ namespace Test.Example
     public class TestSO : SO
     {
         public string id;
+
+        [ReadOnlyInspector] public int iId = 5;
+        public int iId2 = 5;
+
+        [ReadOnlyInspector] public List<int> testInt = new() { 3,7,10};
+
+        public string sid;
+        public bool bid;
+
         public override void Initialize()
         {
             Debug.Log($"Initialize > TestSO: {id}");
