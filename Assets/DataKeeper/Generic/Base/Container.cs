@@ -27,7 +27,7 @@ namespace DataKeeper.Generic.Base
         {
             if (_root == null)
             {
-                _root = new GameObject($"[ActionStage Container]").transform;
+                _root = new GameObject($"[DataKeeper Container]").transform;
                 Object.DontDestroyOnLoad(_root);
             }
 
