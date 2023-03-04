@@ -35,7 +35,6 @@ namespace Test.Example
             DK.Any.InstantiateComponent<SceneClass>(false);
             DK.Any.Instantiate<SimpleClass>();
             
-            Act.DelayedCall(10f, () => SceneManager.LoadScene(1));
             
             Debug.Log(testJson.ToJSON(Formatting.Indented));
         }

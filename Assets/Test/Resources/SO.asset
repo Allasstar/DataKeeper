@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: SO
   m_EditorClassIdentifier: 
   id: qwe
+  <Prefab>k__BackingField: {fileID: 2370438984323773720, guid: 5406a8ee731864640858bc8925f2bc1f,
+    type: 3}

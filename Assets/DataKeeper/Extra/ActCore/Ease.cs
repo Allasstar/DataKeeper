@@ -16,4 +16,9 @@ public struct Ease
     {
         return new Ease(target);
     }
+
+    public override string ToString()
+    {
+        return _value.ToString();
+    }
 }

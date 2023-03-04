@@ -75,5 +75,22 @@ namespace DataKeeper.Extra.ActCore
             value?.Invoke(to);
             onComplete?.Invoke();
         }
+        
+        public static IEnumerator Float(float from, float to, float duration, Func<float, float, float, Ease> ease, Action<float> value, Action onComplete)
+        {
+            var time = 0f;
+            value?.Invoke(from);
+            
+            while (time <= duration)
+            {
+                yield return new WaitForEndOfFrame();
+                time += Time.deltaTime;
+                
+                value?.Invoke(ease(time / duration, from, to));
+            }
+            
+            value?.Invoke(to);
+            onComplete?.Invoke();
+        }
     }
 }
