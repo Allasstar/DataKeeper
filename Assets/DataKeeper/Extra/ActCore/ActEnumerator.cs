@@ -76,7 +76,7 @@ namespace DataKeeper.Extra.ActCore
             onComplete?.Invoke();
         }
         
-        public static IEnumerator Float(float from, float to, float duration, Func<float, float, float, Ease> ease, Action<float> value, Action onComplete)
+        public static IEnumerator Float(float from, float to, float duration, Func<float, float, float, FloatEase> ease, Action<float> value, Action onComplete)
         {
             var time = 0f;
             value?.Invoke(from);

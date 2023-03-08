@@ -1,20 +1,20 @@
-public struct Ease
+public struct FloatEase
 {
     private readonly float _value;
 
-    private Ease(float value)
+    private FloatEase(float value)
     {
         _value = value;
     }
 
-    public static implicit operator float(Ease target)
+    public static implicit operator float(FloatEase target)
     {
         return target._value;
     }
 
-    public static implicit operator Ease(float target)
+    public static implicit operator FloatEase(float target)
     {
-        return new Ease(target);
+        return new FloatEase(target);
     }
 
     public override string ToString()

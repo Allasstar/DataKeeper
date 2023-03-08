@@ -51,7 +51,7 @@ namespace DataKeeper.Extra.ActCore
 
         
         public static void Float(float from, float to, float duration, Action<float> value, Action onComplete = null) => StartCoroutine(ActEnumerator.Float(from, to, duration, value, onComplete));
-        public static void Float(float from, float to, float duration, Func<float, float, float, Ease> ease, Action<float> value, Action onComplete) =>
+        public static void Float(float from, float to, float duration, Func<float, float, float, FloatEase> ease, Action<float> value, Action onComplete) =>
             StartCoroutine(ActEnumerator.Float(from, to, duration, ease, value, onComplete));
 
         
