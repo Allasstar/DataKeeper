@@ -45,5 +45,33 @@ namespace DataKeeper.Extensions
             v.z = z;
             tr.localPosition = v;
         }
+        
+        public static bool IsInsideCube(this Vector3 point, Vector3 cubePos, Vector3 cubeSize)
+        {
+            var min = cubePos - cubeSize / 2f;
+            var max = cubePos + cubeSize / 2f;
+            
+            return point.x >= min.x 
+                   && point.x <= max.x
+                   && point.y >= min.y 
+                   && point.y <= max.y
+                   && point.z >= min.z 
+                   && point.z <= max.z;
+        }
+        
+        public static bool IsInsideCube(this Transform tr, Vector3 cubePos, Vector3 cubeSize)
+        {
+            return tr.position.IsInsideCube(cubePos, cubeSize);
+        }
+        
+        public static bool IsInsideSphere(this Vector3 point, Vector3 spherePos, float sphereRadius)
+        {
+            return Vector3.Distance(point, spherePos) <= sphereRadius;
+        }
+        
+        public static bool IsInsideSphere(this Transform tr, Vector3 spherePos, float sphereRadius)
+        {
+            return Vector3.Distance(tr.position, spherePos) <= sphereRadius;
+        }
     }
 }
