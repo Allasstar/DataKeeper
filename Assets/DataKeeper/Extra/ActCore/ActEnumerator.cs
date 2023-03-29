@@ -20,7 +20,6 @@ namespace DataKeeper.Extra.ActCore
     
         public static IEnumerator OneSecondUpdate(Action callback)
         {
-            callback?.Invoke();
             
             while (true)
             {
@@ -59,6 +58,20 @@ namespace DataKeeper.Extra.ActCore
             onComplete?.Invoke();
         }
     
+        public static IEnumerator Delta(float duration, Action<float> delta, Action onComplete)
+        {
+            var time = 0f;
+            
+            while (time <= duration)
+            {
+                yield return new WaitForEndOfFrame();
+                time += Time.deltaTime;
+                delta?.Invoke(Time.deltaTime);
+            }
+            
+            onComplete?.Invoke();
+        }
+        
         public static IEnumerator Float(float from, float to, float duration, Action<float> value, Action onComplete)
         {
             var time = 0f;

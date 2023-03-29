@@ -6,6 +6,18 @@ public class TestAnumation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        var del = 0f;
+        var damage = 30f;
+        var dd = 0f;
+        
+        Act.Delta(2.5f, d =>
+        {
+            del += d;
+            var dmg = damage * d;
+            dd += dmg;
+            Debug.Log($"del: {del} > d: {d}  dmg: {dmg}  >  damage: {damage} == dd: {dd}");
+        });
+        
         Act.DelayedCall(1f, Anim);
     }
 
@@ -23,7 +35,7 @@ public class TestAnumation : MonoBehaviour
         {
             Act.DelayedCall(3f, Anim);
         });
-        
+
         // Act.Float(0f, 1f, 1f, i =>
         // {
         //     var pos = Vector3.zero;
