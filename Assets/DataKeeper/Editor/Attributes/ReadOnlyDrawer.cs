@@ -1,7 +1,8 @@
+using DataKeeper.Attributes;
 using UnityEditor;
 using UnityEngine;
 
-namespace DataKeeper.Attributes.Editor
+namespace DataKeeper.Editor.Attributes
 {
     /// <summary>
     /// This class contain custom drawer for ReadOnly attribute.
