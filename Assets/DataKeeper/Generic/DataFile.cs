@@ -47,6 +47,12 @@ namespace DataKeeper.Generic
             }
         }
 
+        public bool IsFileExist()
+        {
+            BuildFilePath();
+            return File.Exists(_filePath);
+        }
+
         public void SaveData()
         {
             BuildFilePath();
