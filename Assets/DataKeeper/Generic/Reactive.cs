@@ -6,7 +6,7 @@ using UnityEngine.Events;
 namespace DataKeeper.Generic
 {
     [Serializable]
-    public class Reactive<T>
+    public class Reactive<T> : IReactive
     {
         [SerializeField]
         private T value;
@@ -46,17 +46,15 @@ namespace DataKeeper.Generic
             get => this.value;
             set => this.value = value;
         }
+        
+        public void Invoke()
+        {
+            this.OnValueChanged?.Invoke(value);
+        }
 
         public void SilentChange(T value)
         {
-            try
-            {
-                this.value = value;
-            }
-            catch (Exception e)
-            {
-                Debug.Log($"Reactive Exception: {e.Message}");
-            }
+            this.value = value;
         }
 
         public void AddListener(UnityAction<T> call)
@@ -83,5 +81,10 @@ namespace DataKeeper.Generic
         {
             value = default(T);
         }
+    }
+    
+    public interface IReactive
+    {
+        public void Invoke();
     }
 }

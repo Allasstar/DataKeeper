@@ -605,6 +605,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3edd0c57d60660f409de46e220f37fe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _color1: {r: 0.412, g: 0.21960786, b: 0.2196079, a: 1}
+  _color2: {r: 0, g: 0, b: 0, a: 0}
+  SomeDataFileBin:
+    data:
+      Number: 236
+      Boo: 0
+      Flo: 0
+      Str: null
+      justList:
+      - qwer
+      - asdf
+      - zxcv
+      - qaz
+  SomeDataFileXml:
+    data:
+      Number: 236
+      Boo: 0
+      Flo: 0
+      Str: null
+      justList:
+      - qwer
+      - asdf
+      - zxcv
+      - qaz
+  SomeDataFileJson:
+    data:
+      Number: 236
+      Boo: 0
+      Flo: 0
+      Str: null
+      justList:
+      - qwer
+      - asdf
+      - zxcv
+      - qaz
+  SomeDataPref:
+    value:
+      Number: 236
+      Boo: 0
+      Flo: 0
+      Str: null
+      justList:
+      - qwer
+      - asdf
+      - zxcv
+      - qaz
+  BoolPref:
+    value: 1
+  SomeDataReact:
+    value:
+      Number: 236
+      Boo: 0
+      Flo: 0
+      Str: null
+      justList:
+      - qwer
+      - asdf
+      - zxcv
+      - qaz
+  BoolReact:
+    value: 1
+  StringReact:
+    value: 
 --- !u!65 &1733790301
 BoxCollider:
   m_ObjectHideFlags: 0

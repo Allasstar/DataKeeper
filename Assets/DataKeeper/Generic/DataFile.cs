@@ -8,17 +8,14 @@ using UnityEngine;
 
 namespace DataKeeper.Generic
 {
-    public enum SerializationType
-    {
-        Binary = 0,
-        Xml = 1,
-        Json = 2
-    }
-
     [Serializable]
-    public class DataFile<T>
+    public class DataFile<T> : IDataFile
     {
-        [field: SerializeField] public T Data { get; set; }
+        [SerializeField] 
+        private T data;
+        
+        public T Data { get => data; set => data = value; }
+        
         private readonly string _fileName;
         private string _filePath = null;
         private readonly SerializationType _serializationType;
@@ -27,7 +24,7 @@ namespace DataKeeper.Generic
         {
             _fileName = fileName;
             _serializationType = serializationType;
-            Data = default(T);
+            data = default(T);
         }
 
         public DataFile(string fileName, SerializationType serializationType, T defaultValue) : this(fileName, serializationType)
@@ -340,5 +337,18 @@ namespace DataKeeper.Generic
                 Debug.LogError("Error loading JSON data: " + ex.Message);
             }
         }
+    }
+    
+    public enum SerializationType
+    {
+        Binary = 0,
+        Xml = 1,
+        Json = 2
+    }
+    
+    public interface IDataFile
+    {
+        public void SaveData();
+        public void LoadData();
     }
 }
