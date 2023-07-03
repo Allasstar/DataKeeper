@@ -38,3 +38,20 @@ The Initialize() method is meant to be overridden in derived classes. It allows 
 The Save() method is only available in the Unity Editor and is marked with the [ContextMenu("Save")] attribute. This method is designed to be used during development to manually save changes made to a ScriptableObject. When you right-click on an instance of the ScriptableObject in the Unity Editor, a context menu will appear, and selecting the "Save" option will invoke the Save() method. Inside the Save() method, the ScriptableObject is marked as dirty using EditorUtility.SetDirty(this), indicating that it has been modified. Then, AssetDatabase.SaveAssets() is called to save the changes to disk. This allows you to control when and how the changes to the ScriptableObject are saved without relying solely on automatic serialization.
 
 In summary, the SO script provides a way to initialize ScriptableObjects with custom logic using the Initialize() method, and it allows manual saving of changes made to ScriptableObjects using the Save() method in the Unity Editor during development.
+
+
+## ActEngine
+
+The group of scripts revolves around the Act class, which serves as the main class for managing various game-related events and actions. Let's break down each script and its functionality:
+
+Act.cs: This script defines the Act class, which provides a static interface to access and control the ActEngine. It includes properties and events for various application and scene-related events, such as application quit, focus, pause, scene loaded, scene unloaded, and update events. It also provides methods for initializing the ActEngine, starting and stopping coroutines, and executing different types of actions with timing and easing.
+
+ActEngine.cs: The ActEngine is a MonoBehaviour that handles the execution of events and callbacks related to application and scene events. It includes UnityEvents for application quit, focus, pause, scene loaded, scene unloaded, and update events. It registers event handlers for SceneManager's sceneLoaded and sceneUnloaded events. It also provides the implementation for the MonoBehaviour's callbacks such as OnApplicationQuit, OnApplicationFocus, and OnApplicationPause.
+
+ActEnumerator.cs: This script defines a static class called ActEnumerator, which contains coroutine-based utility methods for different types of actions and timing. These methods include waiting for a condition to be met, executing an action repeatedly at a specific interval, delaying a callback, interpolating integer and float values over time, and executing an action with custom easing.
+
+ActEase.cs: This script defines the ActEase class, which provides different easing functions for use with the ActEnumerator. It includes easing functions such as linear, sine, cosine, and various combinations of ease-in, ease-out, and ease-in-out.
+
+Overall, these scripts provide a convenient and centralized way to manage and execute game-related events, actions, and timings using coroutines and easing functions. The Act class serves as the main entry point for accessing and utilizing these functionalities.
+
+
