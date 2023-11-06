@@ -40,7 +40,7 @@ namespace DataKeeper.Extensions
       public static T RandomSystem<T>(this IList<T> list)
       {
          Random rnd = new Random();
-         return list[rnd.Next(0, list.Count - 1)];
+         return list[rnd.Next(0, list.Count)];
       }
    
       public static bool HasIndex<T>(this IList<T> list, int index)
