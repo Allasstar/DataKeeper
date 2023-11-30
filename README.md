@@ -45,6 +45,8 @@ The `Save()` method is only available in the Unity Editor and is marked with the
 
 In summary, the SO script provides a way to initialize ScriptableObjects with custom logic using the Initialize() method, and it allows manual saving of changes made to ScriptableObjects using the Save() method in the Unity Editor during development.
 
+## **BootstrapSO** (SO)
+The purpose of this SO for managing the initialization and bootstrapping of scenes in a Unity project. 
 
 ## **ActEngine**
 
