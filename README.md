@@ -63,3 +63,5 @@ ActEase.cs: This script defines the ActEase class, which provides different easi
 Overall, these scripts provide a convenient and centralized way to manage and execute game-related events, actions, and timings using coroutines and easing functions. The Act class serves as the main entry point for accessing and utilizing these functionalities.
 
 
+# **Install Newtonsoft’s Json.NET Package**
+On Unity go to Windows->Package Manager, once the Package Manager window opens, go to Add package from git URL, type com.unity.nuget.newtonsoft-json press Add and done.
