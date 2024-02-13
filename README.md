@@ -2,7 +2,8 @@
 
 **DataKeeper** is a comprehensive package/Unity extension that enhances the functionality and convenience of Unity development. It includes a collection of scripts designed to streamline common tasks and improve efficiency. From reactive variables and preferences to data serialization and registration systems, DataKeeper offers a wide range of tools to simplify your workflow.
 
-
+# **Install Newtonsoft’s Json.NET Package**
+On Unity go to Windows->Package Manager, once the Package Manager window opens, go to Add package from git URL, type com.unity.nuget.newtonsoft-json press Add and done.
 
 # --- SCRIPTS ---
 
@@ -61,7 +62,3 @@ ActEnumerator.cs: This script defines a static class called ActEnumerator, which
 ActEase.cs: This script defines the ActEase class, which provides different easing functions for use with the ActEnumerator. It includes easing functions such as linear, sine, cosine, and various combinations of ease-in, ease-out, and ease-in-out.
 
 Overall, these scripts provide a convenient and centralized way to manage and execute game-related events, actions, and timings using coroutines and easing functions. The Act class serves as the main entry point for accessing and utilizing these functionalities.
-
-
-# **Install Newtonsoft’s Json.NET Package**
-On Unity go to Windows->Package Manager, once the Package Manager window opens, go to Add package from git URL, type com.unity.nuget.newtonsoft-json press Add and done.
