@@ -1,24 +1,50 @@
 using System.Collections.Generic;
+using DataKeeper.Attributes;
 using DataKeeper.Base;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace DataKeeper.Extra
 {
     [CreateAssetMenu(menuName = "DataKeeper/Bootstrap SO", fileName = "Bootstrap SO")]
     public class BootstrapSO : SO
     {
-        [SerializeField] private List<SceneAsset> _bootstrapSceneList = new();
+#if UNITY_EDITOR
+        [SerializeField] private List<SceneAsset> _bootstrapSceneList = new List<SceneAsset>();
+        
+        private void OnValidate()
+        {
+            _bootstrapSceneNameList.Clear();
+
+            foreach (var sceneAsset in _bootstrapSceneList)
+            {
+                if(sceneAsset == null) continue;
+                _bootstrapSceneNameList.Add(sceneAsset.name);
+            }
+
+            _initialSceneName = _initialScene == null ? string.Empty : _initialScene.name;
+        }
+#endif
+
+        [SerializeField, ReadOnlyInspector] private List<string> _bootstrapSceneNameList = new List<string>();
         
         [SerializeField, Space(20)] private bool _loadInitialSceneInEditor = false;
         [SerializeField] private bool _loadInitialSceneAdditive = false;
-        [SerializeField] private SceneAsset _initialScene;
         
-        [SerializeField, Space(20)] private List<GameObject> _dontDestroyOnLoadList = new();
+#if UNITY_EDITOR
+        [SerializeField] private SceneAsset _initialScene;
+#endif
+        
+        [SerializeField, ReadOnlyInspector] private string _initialSceneName;
+
+        [SerializeField, Space(20)] private List<GameObject> _dontDestroyOnLoadList = new List<GameObject>();
 
         private int _bootstrapSceneCount = 0;
-        
+
         public override void Initialize()
         {
             Boot();
@@ -28,26 +54,26 @@ namespace DataKeeper.Extra
 
         private void Boot()
         {
-            if (_bootstrapSceneList.Count > 0)
+            if (_bootstrapSceneNameList.Count > 0)
             {
                 _bootstrapSceneCount = 0;
                 SceneManager.sceneLoaded += SceneManagerOnSceneLoaded;
 
-                foreach (var bootstrapScene in _bootstrapSceneList)
+                foreach (var bootstrapScene in _bootstrapSceneNameList)
                 {
-                    if(bootstrapScene == null) continue;
+                    if(string.IsNullOrEmpty(bootstrapScene)) continue;
                     
                     _bootstrapSceneCount++;
-                    SceneManager.LoadScene(bootstrapScene.name, LoadSceneMode.Additive);
+                    SceneManager.LoadScene(bootstrapScene, LoadSceneMode.Additive);
                 }
             }
         }
         
         private void Init()
         {
-            if (!_loadInitialSceneInEditor || _initialScene == null) return;
+            if (!_loadInitialSceneInEditor || string.IsNullOrEmpty(_initialSceneName)) return;
             
-            SceneManager.LoadScene(_initialScene.name, _loadInitialSceneAdditive ? LoadSceneMode.Additive : LoadSceneMode.Single);
+            SceneManager.LoadScene(_initialSceneName, _loadInitialSceneAdditive ? LoadSceneMode.Additive : LoadSceneMode.Single);
         }
 
         private void InstantiatePrefabs()
@@ -62,7 +88,7 @@ namespace DataKeeper.Extra
         
         private void SceneManagerOnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            if (_bootstrapSceneList.Exists(e => e.name == scene.name))
+            if (_bootstrapSceneNameList.Exists(name => name == scene.name))
             {
                 _bootstrapSceneCount--;
                 SceneManager.UnloadSceneAsync(scene.name);
