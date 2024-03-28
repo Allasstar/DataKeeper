@@ -7,35 +7,35 @@ On Unity go to Windows->Package Manager, once the Package Manager window opens, 
 
 # --- SCRIPTS ---
 
-## **Reactive<T>**
+## [Reactive<T>](https://github.com/Allasstar/DataKeeper/blob/main/Assets/DataKeeper/Generic/Reactive.cs)
 
 The `Reactive<T>` class is a generic class that represents a reactive variable of type `T`. It allows you to track changes to its value and invoke corresponding events when the value is modified.
 
-## **ReactivePref<T>**
+## [ReactivePref<T>](https://github.com/Allasstar/DataKeeper/blob/main/Assets/DataKeeper/Generic/ReactivePref.cs)
 
 The `ReactivePref<T>` class is a generic class that represents a reactive preference variable of type `T` in Unity. It provides a convenient way to store and retrieve preferences using PlayerPrefs while also supporting automatic saving and loading.
 
-## **DataFile<T>**
+## [DataFile<T>](https://github.com/Allasstar/DataKeeper/blob/main/Assets/DataKeeper/Generic/DataFile.cs)
 
 The `DataFile<T>` class is a generic class that provides functionality to save and load data of type `T` to a file using different serialization formats such as Binary, XML, or JSON.
 
-## **Optional<T>**
+## [Optional<T>](https://github.com/Allasstar/DataKeeper/blob/main/Assets/DataKeeper/Generic/Optional.cs)
 
 The `Optional<T>` struct represents an optional value of type T. It allows you to store a value of type `T` along with a flag indicating whether the value is enabled or not.
 
-## **Register<TValue>**
+## [Register<TValue>](https://github.com/Allasstar/DataKeeper/blob/main/Assets/DataKeeper/Generic/Register.cs)
 The `Register<TValue>` class is a generic class that inherits from the Container<TValue> class. It provides functionality to register and store values of type TValue using a string identifier or the type name.
 
-## **RegisterActivator<TValue>**
+## [RegisterActivator<TValue>](https://github.com/Allasstar/DataKeeper/blob/main/Assets/DataKeeper/Generic/RegisterActivator.cs)
 The `RegisterActivator<TValue>` class is a generic class that inherits from the Container<TValue> class. It provides additional functionality to instantiate and register values of type TValue using either Activator.CreateInstance<T>() or by instantiating a Component in a GameObject.
 
-## **Registrar**
+## [Registrar](https://github.com/Allasstar/DataKeeper/blob/main/Assets/DataKeeper/Components/Registrar.cs)
 The `Registrar` class is a MonoBehaviour that serves as a registration system for components. It uses the Register<Component> class to store and manage registered components.
 
-## **SelectUIElementEditor**
+## [SelectUIElementEditor](https://github.com/Allasstar/DataKeeper/blob/main/Assets/DataKeeper/Editor/SellectUIElementEditor.cs)
 The `SelectUIElementEditor` class is an editor script that allows you to select UI elements in the Unity Editor by pressing the Tab key.
 
-## **SO** (ScriptableObject)
+## [SO (ScriptableObject)](https://github.com/Allasstar/DataKeeper/blob/main/Assets/DataKeeper/Base/SO.cs)
 The `SO` class is an abstract class that extends the ScriptableObject class provided by Unity. It serves as a base class for creating custom ScriptableObject classes.
 
 The SO class is a base class for ScriptableObjects in Unity, providing two important functionalities: the Initialize() method and the Save() method.
@@ -46,13 +46,13 @@ The `Save()` method is only available in the Unity Editor and is marked with the
 
 In summary, the SO script provides a way to initialize ScriptableObjects with custom logic using the Initialize() method, and it allows manual saving of changes made to ScriptableObjects using the Save() method in the Unity Editor during development.
 
-## **BootstrapSO** (SO)
+## [BootstrapSO (SO)](https://github.com/Allasstar/DataKeeper/blob/main/Assets/DataKeeper/Extra/BootstrapSO.cs)
 The purpose of this SO for managing the initialization and bootstrapping of scenes in a Unity project. 
 
-## **UI**
+## [UI](https://github.com/Allasstar/DataKeeper/tree/main/Assets/DataKeeper/UI)
 The `ApplyPreset` class is a MonoBehaviour script designed to apply presets to any MonoBehaviour Components in the Unity editor if they are valid and applicable.
 
-## **ActEngine**
+## [ActEngine](https://github.com/Allasstar/DataKeeper/tree/main/Assets/DataKeeper/Extra/ActCore)
 
 The group of scripts revolves around the Act class, which serves as the main class for managing various game-related events and actions. Let's break down each script and its functionality:
 
