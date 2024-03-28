@@ -15,8 +15,13 @@ MonoBehaviour:
   _bootstrapSceneList:
   - {fileID: 102900000, guid: 95bfdefebdb8f0e46b67bcca003b25e0, type: 3}
   - {fileID: 102900000, guid: da162e72efac9cd47879582799ef0b39, type: 3}
-  _loadInitialSceneInEditor: 0
+  _bootstrapSceneNameList:
+  - Bootstrap Scene 0
+  - Bootstrap Scene 1
+  _loadInitialSceneInEditor: 1
   _loadInitialSceneAdditive: 0
-  _initialScene: {fileID: 102900000, guid: 4d14e47a72831a8448783db9c23b975a, type: 3}
+  _initialScene: {fileID: 102900000, guid: bdc48949ba5e8c24aad1fa89ea1ad73e, type: 3}
+  _initialSceneName: UI Style
   _dontDestroyOnLoadList:
   - {fileID: 5843566792890160770, guid: 7defe0a78998cac4bb91429b29572c41, type: 3}
+  - {fileID: 3562177690381302365, guid: ec95b63da6896a249b0a49999f21a068, type: 3}

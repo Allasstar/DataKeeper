@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Examples/Bootstrap/Scenes/Bootstrap Scene 1.unity
     guid: da162e72efac9cd47879582799ef0b39
+  - enabled: 1
+    path: Assets/Examples/UI Style/Scenes/UI Style.unity
+    guid: bdc48949ba5e8c24aad1fa89ea1ad73e
   m_configObjects: {}
