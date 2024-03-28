@@ -49,7 +49,7 @@ In summary, the SO script provides a way to initialize ScriptableObjects with cu
 ## [BootstrapSO (SO)](https://github.com/Allasstar/DataKeeper/blob/main/Assets/DataKeeper/Extra/BootstrapSO.cs)
 The purpose of this SO for managing the initialization and bootstrapping of scenes in a Unity project. 
 
-## [UI](https://github.com/Allasstar/DataKeeper/tree/main/Assets/DataKeeper/UI)
+## [ApplyPreset](https://github.com/Allasstar/DataKeeper/blob/main/Assets/DataKeeper/UI/ApplyPreset.cs)
 The `ApplyPreset` class is a MonoBehaviour script designed to apply presets to any MonoBehaviour Components in the Unity editor if they are valid and applicable.
 
 ## [ActEngine](https://github.com/Allasstar/DataKeeper/tree/main/Assets/DataKeeper/Extra/ActCore)
