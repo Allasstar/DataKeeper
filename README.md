@@ -13,15 +13,15 @@ The `Reactive<T>` class is a generic class that represents a reactive variable o
 
 ## **ReactivePref<T>**
 
-The `ReactivePref<T>` class is a generic class that represents a reactive preference variable of type T in Unity. It provides a convenient way to store and retrieve preferences using PlayerPrefs while also supporting automatic saving and loading.
+The `ReactivePref<T>` class is a generic class that represents a reactive preference variable of type `T` in Unity. It provides a convenient way to store and retrieve preferences using PlayerPrefs while also supporting automatic saving and loading.
 
 ## **DataFile<T>**
 
-The `DataFile<T>` class is a generic class that provides functionality to save and load data of type T to a file using different serialization formats such as Binary, XML, or JSON.
+The `DataFile<T>` class is a generic class that provides functionality to save and load data of type `T` to a file using different serialization formats such as Binary, XML, or JSON.
 
 ## **Optional<T>**
 
-The `Optional<T>` struct represents an optional value of type T. It allows you to store a value of type T along with a flag indicating whether the value is enabled or not.
+The `Optional<T>` struct represents an optional value of type T. It allows you to store a value of type `T` along with a flag indicating whether the value is enabled or not.
 
 ## **Register<TValue>**
 The `Register<TValue>` class is a generic class that inherits from the Container<TValue> class. It provides functionality to register and store values of type TValue using a string identifier or the type name.
@@ -38,7 +38,7 @@ The `SelectUIElementEditor` class is an editor script that allows you to select 
 ## **SO** (ScriptableObject)
 The `SO` class is an abstract class that extends the ScriptableObject class provided by Unity. It serves as a base class for creating custom ScriptableObject classes.
 
-The SO script is a base class for ScriptableObjects in Unity, providing two important functionalities: the Initialize() method and the Save() method.
+The SO class is a base class for ScriptableObjects in Unity, providing two important functionalities: the Initialize() method and the Save() method.
 
 The `Initialize()` method is meant to be overridden in derived classes. It allows you to define custom initialization logic for your ScriptableObjects. This method will be automatically called when the game starts or when the ScriptableObject is created in the Unity Editor. You can use the Initialize() method to instantiate objects, register the ScriptableObject with some data, or perform any other setup tasks specific to your ScriptableObject.
 
@@ -48,6 +48,9 @@ In summary, the SO script provides a way to initialize ScriptableObjects with cu
 
 ## **BootstrapSO** (SO)
 The purpose of this SO for managing the initialization and bootstrapping of scenes in a Unity project. 
+
+## **UI**
+The `ApplyPreset` class is a MonoBehaviour script designed to apply presets to any MonoBehaviour Components in the Unity editor if they are valid and applicable.
 
 ## **ActEngine**
 
