@@ -25,7 +25,7 @@ namespace DataKeeper.Editor.Attributes
                 
                 if (_isEnabled)
                 {
-                    EditorGUI.PropertyField(position, property, label, true);
+                    PropertyGUI.DrawGUI(position, property, label);
                 }
             }
             else
@@ -36,8 +36,10 @@ namespace DataKeeper.Editor.Attributes
         
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            if(_isEnabled)
-                return EditorGUI.GetPropertyHeight(property);
+            if (_isEnabled)
+            {
+                return PropertyGUI.GetPropertyHeight(property);
+            }
 
             return 0f;
         }
