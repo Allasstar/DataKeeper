@@ -6,6 +6,7 @@ using UnityEngine;
 namespace DataKeeper.Components
 {
     [DefaultExecutionOrder(-10000)]
+    [AddComponentMenu("DataKeeper/Registrar", 0)]
     public class Registrar : MonoBehaviour
     {
         public static Register<Component> Components = new ();

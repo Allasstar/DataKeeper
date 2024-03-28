@@ -17,5 +17,11 @@ namespace DataKeeper.Generic
             enabled = true;
             value = initialValue;
         }
+
+        public Optional(T initialValue, bool isEnabled)
+        {
+            enabled = isEnabled;
+            value = initialValue;
+        }
     }
 }
