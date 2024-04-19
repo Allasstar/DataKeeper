@@ -1,4 +1,5 @@
 ﻿using System;
+using DataKeeper.Attributes;
 using UnityEngine;
 
 namespace DataKeeper.UI
@@ -11,6 +12,12 @@ namespace DataKeeper.UI
         [SerializeField] private TargetPreset[] _targetPresetArray;
         
         private void OnValidate()
+        {
+            ForceApply();
+        }
+
+        [Button("Force Apply", 10)]
+        private void ForceApply()
         {
             if(_targetPresetArray == null || _targetPresetArray.Length == 0) return;
 
@@ -41,7 +48,7 @@ namespace DataKeeper.UI
         [Serializable]
         public class TargetPreset
         {
-            [field: SerializeField] public UnityEngine.Object Target { get; private set; }
+            [field: SerializeField] public Component Target { get; private set; }
             [field: SerializeField] public UnityEditor.Presets.Preset Preset { get; set; }
         }
 #endif

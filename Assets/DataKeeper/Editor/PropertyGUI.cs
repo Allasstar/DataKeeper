@@ -1,3 +1,5 @@
+using System.Reflection;
+using DataKeeper.Attributes;
 using DataKeeper.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -6,6 +8,27 @@ namespace DataKeeper.Editor
 {
     public static class PropertyGUI
     {
+        public static void DrawButtons(Object target)
+        {
+            MethodInfo[] methods = target.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+            foreach (MethodInfo method in methods)
+            {
+                var attributes = method.GetCustomAttributes(typeof(ButtonAttribute), true);
+                if (attributes.Length > 0)
+                {
+                    ButtonAttribute buttonAttribute = attributes[0] as ButtonAttribute;
+                    string buttonLabel = buttonAttribute.ButtonLabel ?? method.Name;
+
+                    EditorGUILayout.Space(buttonAttribute.Space);
+                    if (GUILayout.Button(buttonLabel))
+                    {
+                        method.Invoke(target, null);
+                    }
+                }
+            }
+        }
+        
         public static void DrawGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             if (property.type == typeof(Optional<>).Name)
