@@ -1,4 +1,3 @@
-using System.Reflection;
 using DataKeeper.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -57,15 +56,14 @@ namespace DataKeeper.Editor
             }
             
             buttonPosition.x += _buttonWidth + _space;
-            GUIContent buttonContent3 = new GUIContent("F", "Fire event. Only play mode.");
-                
+            GUIContent buttonContent3 = new GUIContent("F", "Fire event.");
+            
+            EditorGUI.BeginDisabledGroup(!Application.isPlaying);
             if (GUI.Button(buttonPosition, buttonContent3))
             {
-                if (Application.isPlaying)
-                {
-                    targetProperty.Invoke();
-                }
+                targetProperty.Invoke();
             }
+            EditorGUI.EndDisabledGroup();
             
             EditorGUI.EndProperty();
         }
