@@ -99,9 +99,11 @@ namespace DataKeeper.Generic
             this.value = value;
         }
 
-        public void AddListener(UnityAction<T> call)
+        public void AddListener(UnityAction<T> call, bool callOnAddListener = false)
         {
             OnValueChanged.AddListener(call);
+            
+            if(callOnAddListener) OnValueChanged.Invoke(value);
         }
     
         public void RemoveListener(UnityAction<T> call)
