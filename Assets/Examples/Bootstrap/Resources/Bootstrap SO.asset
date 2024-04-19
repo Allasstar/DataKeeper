@@ -18,10 +18,9 @@ MonoBehaviour:
   _bootstrapSceneNameList:
   - Bootstrap Scene 0
   - Bootstrap Scene 1
-  _loadInitialSceneInEditor: 1
+  _loadInitialSceneInEditor: 0
   _loadInitialSceneAdditive: 0
-  _initialScene: {fileID: 102900000, guid: bdc48949ba5e8c24aad1fa89ea1ad73e, type: 3}
-  _initialSceneName: UI Style
+  _initialScene: {fileID: 102900000, guid: 2117b2030cabc6541b7271886fe55270, type: 3}
+  _initialSceneName: Main Scene
   _dontDestroyOnLoadList:
   - {fileID: 5843566792890160770, guid: 7defe0a78998cac4bb91429b29572c41, type: 3}
-  - {fileID: 3562177690381302365, guid: ec95b63da6896a249b0a49999f21a068, type: 3}
