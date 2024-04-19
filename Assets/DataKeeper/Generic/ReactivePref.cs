@@ -31,7 +31,7 @@ namespace DataKeeper.Generic
         
         public void Load()
         {
-            switch (DefaultValue)
+            switch (value)
             {
                 case int i:
                     value = (T)(object)PlayerPrefs.GetInt(Key, i);
@@ -45,6 +45,21 @@ namespace DataKeeper.Generic
                 case bool b:
                     var res = PlayerPrefs.GetInt(Key, b ? 1 : 0) == 1;
                     value = (T)(object)res;
+                    break;
+                case Vector2 v2:
+                    value = (T)(object)v2.FromString(PlayerPrefs.GetString(Key, "(0.0, 0.0)"));
+                    break;
+                case Vector3 v3:
+                    value = (T)(object)v3.FromString(PlayerPrefs.GetString(Key, "(0.0, 0.0, 0.0)"));
+                    break;
+                case Vector4 v4:
+                    value = (T)(object)v4.FromString(PlayerPrefs.GetString(Key, "(0.0, 0.0, 0.0, 0.0)"));
+                    break;
+                case Color col:
+                    value = (T)(object)col.FromString(PlayerPrefs.GetString(Key, "RGBA(0.0, 0.0, 0.0, 0.0)"));
+                    break;
+                case Rect rect:
+                    value = (T)(object)rect.FromString(PlayerPrefs.GetString(Key, "(x:0.0, y:0.0, width:0.0, height:0.00)"));
                     break;
                 default:
                     var defaultJson = JsonConvert.SerializeObject(DefaultValue);
@@ -141,6 +156,21 @@ namespace DataKeeper.Generic
                     break;
                 case bool b:
                     PlayerPrefs.SetInt(Key, b ? 1 : 0);
+                    break;
+                case Vector2 v2:
+                    PlayerPrefs.SetString(Key, v2.ToString());
+                    break;
+                case Vector3 v3:
+                    PlayerPrefs.SetString(Key, v3.ToString());
+                    break;
+                case Vector4 v4:
+                    PlayerPrefs.SetString(Key, v4.ToString());
+                    break;
+                case Color col:
+                    PlayerPrefs.SetString(Key, col.ToString());
+                    break;
+                case Rect rec:
+                    PlayerPrefs.SetString(Key, rec.ToString());
                     break;
                 default:
                     PlayerPrefs.SetString(Key, JsonConvert.SerializeObject(value));
