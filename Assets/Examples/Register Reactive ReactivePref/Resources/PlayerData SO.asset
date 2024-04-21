@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b5f10ffc1761ae41bed8edb778d919b, type: 3}
   m_Name: PlayerData SO
   m_EditorClassIdentifier: 
+  <PlayerName>k__BackingField:
+    value: 
   <PlayerHealth>k__BackingField:
     value: 100

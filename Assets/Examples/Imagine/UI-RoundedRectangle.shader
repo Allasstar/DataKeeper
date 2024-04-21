@@ -1,0 +1,209 @@
+Shader "UI/Rounded Rectangle (VertexInput)"
+{
+    Properties
+    {
+        [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
+        _Color ("Tint", Color) = (1,1,1,1)
+
+        _StencilComp ("Stencil Comparison", Float) = 8
+        _Stencil ("Stencil ID", Float) = 0
+        _StencilOp ("Stencil Operation", Float) = 0
+        _StencilWriteMask ("Stencil Write Mask", Float) = 255
+        _StencilReadMask ("Stencil Read Mask", Float) = 255
+
+        _ColorMask ("Color Mask", Float) = 15
+
+        [Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip ("Use Alpha Clip", Float) = 0
+    }
+
+    SubShader
+    {
+        Tags
+        {
+            "Queue"="Transparent"
+            "IgnoreProjector"="True"
+            "RenderType"="Transparent"
+            "PreviewType"="Plane"
+            "CanUseSpriteAtlas"="True"
+        }
+
+        Stencil
+        {
+            Ref [_Stencil]
+            Comp [_StencilComp]
+            Pass [_StencilOp]
+            ReadMask [_StencilReadMask]
+            WriteMask [_StencilWriteMask]
+        }
+
+        Cull Off
+        Lighting Off
+        ZWrite Off
+        ZTest [unity_GUIZTestMode]
+        Blend One OneMinusSrcAlpha
+        ColorMask [_ColorMask]
+
+        Pass
+        {
+            Name "Default"
+        CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma target 2.0
+
+            #include "UnityCG.cginc"
+            #include "UnityUI.cginc"
+
+            #pragma multi_compile_local _ UNITY_UI_CLIP_RECT
+            #pragma multi_compile_local _ UNITY_UI_ALPHACLIP
+
+            struct appdata_t
+            {
+                float4 vertex   : POSITION;
+                float4 color    : COLOR;
+                float2 texcoord : TEXCOORD0;
+                float4 uv1 : TEXCOORD1;
+                float4 uv2 : TEXCOORD2;
+                
+                UNITY_VERTEX_INPUT_INSTANCE_ID
+            };
+
+            struct v2f
+            {
+                float4 vertex   : SV_POSITION;
+                fixed4 color    : COLOR;
+                float2 texcoord  : TEXCOORD0;
+                float4 cornerRadius  : TEXCOORD1;
+                float2 size  : TEXCOORD2;
+                float stroke  : TEXCOORD3;
+                float4 worldPosition : TEXCOORD4;
+                float4 mask : TEXCOORD5;
+                float pixelSize : TEXCOORD6;
+                
+                UNITY_VERTEX_OUTPUT_STEREO
+            };
+
+            sampler2D _MainTex;
+            fixed4 _Color;
+            fixed4 _TextureSampleAdd;
+            float4 _ClipRect;
+            float4 _MainTex_ST;
+            float _UIMaskSoftnessX;
+            float _UIMaskSoftnessY;
+
+            v2f vert(appdata_t v)
+            {
+                v2f OUT;
+                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
+                float4 vPosition = UnityObjectToClipPos(v.vertex);
+                OUT.worldPosition = v.vertex;
+                OUT.vertex = vPosition;
+
+                float2 pixelSize = vPosition.w;
+                pixelSize /= float2(1, 1) * abs(mul((float2x2)UNITY_MATRIX_P, _ScreenParams.xy));
+
+                float4 clampedRect = clamp(_ClipRect, -2e10, 2e10);
+                float2 maskUV = (v.vertex.xy - clampedRect.xy) / (clampedRect.zw - clampedRect.xy);
+                OUT.texcoord = TRANSFORM_TEX(v.texcoord.xy, _MainTex);
+                OUT.mask = float4(v.vertex.xy * 2 - clampedRect.xy - clampedRect.zw, 0.25 / (0.25 * half2(_UIMaskSoftnessX, _UIMaskSoftnessY) + abs(pixelSize.xy)));
+
+                OUT.color = v.color * _Color;
+
+                OUT.cornerRadius = v.uv1;
+                OUT.size = v.uv2.xy;
+                OUT.stroke = v.uv2.z;
+                OUT.pixelSize = pixelSize;
+                
+                return OUT;
+            }
+
+
+            float roundedRectangle2(in float2 uv, in float4 corner)
+            {
+                float2 size = float2(1, 1);
+                corner = min(corner, min(size.x, size.y));
+                
+                float2 pos = ((uv - 0.5).xy ) / 0.5f;
+                corner.xy = (pos.x > 0.0) ? corner.xy : corner.zw;
+                corner.x  = (pos.y > 0.0) ? corner.x  : corner.y;
+                float2 q = abs(pos) - size + corner.x;
+                return (min(max(q.x,q.y),0.0) + length(max(q,0.0)) - corner.x) * -100;
+            }
+
+            half roundedRectangle(float2 uv, float2 size, float4 corner)
+            {
+                // Compute distances from uv to rectangle edges
+                half4 distances = half4(uv, size.x - uv.x, size.y - uv.y);
+                
+                // Find minimum distance
+                half minDistance = min(min(min(distances.x, distances.y), distances.z), distances.w);
+                
+                // Determine if uv is within rounded corners
+                bool4 withinCorners = bool4(all(distances.xw < corner[0]),
+                                             all(distances.zw < corner[1]),
+                                             all(distances.zy < corner[2]),
+                                             all(distances.xy < corner[3]));
+                
+                // Compute distances from uv to corner points
+                half4 cornerDistances = corner - half4(length(distances.xw - corner[0]),
+                                                       length(distances.zw - corner[1]),
+                                                       length(distances.zy - corner[2]),
+                                                       length(distances.xy - corner[3]));
+                
+                // Clamp corner distances to be non-negative
+                half4 clampedCornerDistances = max(cornerDistances, 0);
+                
+                // Calculate final distances
+                half4 finalDistances = min(withinCorners * clampedCornerDistances, minDistance) + (1 - withinCorners) * minDistance;
+                
+                // Compute minimum final distance
+                half minFinalDistance = min(min(min(finalDistances.x, finalDistances.y), finalDistances.z), finalDistances.w);
+                
+                return minFinalDistance;
+            }
+
+            fixed4 frag(v2f IN) : SV_Target
+            {
+                //Round up the alpha color coming from the interpolator (to 1.0/256.0 steps)
+                //The incoming alpha could have numerical instability, which makes it very sensible to
+                //HDR color transparency blend, when it blends with the world's texture.
+                const half alphaPrecision = half(0xff);
+                const half invAlphaPrecision = half(1.0/alphaPrecision);
+                IN.color.a = round(IN.color.a * alphaPrecision)*invAlphaPrecision;
+
+                half4 color = IN.color * (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd);
+
+                #ifdef UNITY_UI_CLIP_RECT
+                half2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(IN.mask.xy)) * IN.mask.zw);
+                color.a *= m.x * m.y;
+                #endif
+
+                #ifdef UNITY_UI_ALPHACLIP
+                clip (color.a - 0.001);
+                #endif
+
+                // roundedRectangle
+                half rect = roundedRectangle(IN.texcoord * IN.size, IN.size, IN.cornerRadius);
+
+                if(IN.stroke <= 0)
+                {
+                    color.a *= rect;
+                }
+                else
+                {
+                    float stroke = (IN.stroke + 1 / IN.pixelSize) / 2;
+				    color.a *= saturate((stroke - distance(rect, stroke)) * IN.pixelSize);
+                }
+				
+				if(color.a <= 0)
+				{
+					discard;
+				}
+
+                return color;
+            }
+        ENDCG
+        }
+    }
+}
