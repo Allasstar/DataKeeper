@@ -118,19 +118,6 @@ Shader "UI/Rounded Rectangle (VertexInput)"
                 return OUT;
             }
 
-
-            float roundedRectangle2(in float2 uv, in float4 corner)
-            {
-                float2 size = float2(1, 1);
-                corner = min(corner, min(size.x, size.y));
-                
-                float2 pos = ((uv - 0.5).xy ) / 0.5f;
-                corner.xy = (pos.x > 0.0) ? corner.xy : corner.zw;
-                corner.x  = (pos.y > 0.0) ? corner.x  : corner.y;
-                float2 q = abs(pos) - size + corner.x;
-                return (min(max(q.x,q.y),0.0) + length(max(q,0.0)) - corner.x) * -100;
-            }
-
             half roundedRectangle(float2 uv, float2 size, float4 corner)
             {
                 // Compute distances from uv to rectangle edges

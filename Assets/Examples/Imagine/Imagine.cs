@@ -1,4 +1,5 @@
 using System;
+using DataKeeper.Attributes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,12 +18,7 @@ public class Imagine : MonoBehaviour
     [SerializeField] private Color _color = Color.white;
     [SerializeField, Min(0)] private float _scale = 1;
     [SerializeField, Min(0)] private float _stroke = 0;
-    [SerializeField] private Rect _cornerRadius = new Rect(0, 0, 0, 0);
-
-    private void OnEnable()
-    {
-        GetAllComponents();
-    }
+    [SerializeField] private Vector4 _cornerRadius = new Vector4(0, 0, 0, 0);
     
     private void OnValidate()
     {
@@ -42,37 +38,31 @@ public class Imagine : MonoBehaviour
 
     private void GetAllComponents()
     {
-        _imageGraphic = GetComponent<ImageGraphic>();
-        _canvasRenderer = _imageGraphic.canvasRenderer;
-        _canvas = GetComponentInParent<Canvas>();
+        _imageGraphic ??= GetComponent<ImageGraphic>();
+        _canvasRenderer ??= _imageGraphic.canvasRenderer;
+        _canvas ??= GetComponentInParent<Canvas>();
     }
 
-    [ContextMenu("Force Update")]
+    [ContextMenu("Force Update"), Button("Force Update")]
     private void ForceUpdate()
     {
+        GetAllComponents();
         SetAdditionalShaderChannels();
         SetMaterial();
         SetSprite();
         SetColor();
         SetVisibility();
-        ValidateCorners();
     }
 
-    private void ValidateCorners()
+    private Vector4 GetCorners()
     {
         var rect = _imageGraphic.GetPixelAdjustedRect();
 
-        var minSide = Mathf.Min(rect.width, rect.height) / 2f;
-        
-        _cornerRadius.x = Mathf.Max(_cornerRadius.x, 0);
-        _cornerRadius.y = Mathf.Max(_cornerRadius.y, 0);
-        _cornerRadius.width = Mathf.Max(_cornerRadius.width, 0);
-        _cornerRadius.height = Mathf.Max(_cornerRadius.height, 0);
-
-        _cornerRadius.x = Mathf.Min(_cornerRadius.x, minSide);
-        _cornerRadius.y = Mathf.Min(_cornerRadius.y, minSide);
-        _cornerRadius.width = Mathf.Min(_cornerRadius.width, minSide);
-        _cornerRadius.height = Mathf.Min(_cornerRadius.height, minSide);
+        return new Vector4(
+            Mathf.Min(Mathf.Max(_cornerRadius.x, 0), Mathf.Min(rect.width, rect.height) / 2f), 
+            Mathf.Min(Mathf.Max(_cornerRadius.y, 0), Mathf.Min(rect.width, rect.height) / 2f), 
+            Mathf.Min(Mathf.Max(_cornerRadius.z, 0), Mathf.Min(rect.width, rect.height) / 2f),
+            Mathf.Min(Mathf.Max(_cornerRadius.w, 0), Mathf.Min(rect.width, rect.height) / 2f));
     }
     
     private void SetVisibility()
@@ -101,18 +91,12 @@ public class Imagine : MonoBehaviour
         _canvas.additionalShaderChannels |= AdditionalCanvasShaderChannels.TexCoord1 | AdditionalCanvasShaderChannels.TexCoord2 | AdditionalCanvasShaderChannels.TexCoord3;
     }
     
-    private Vector4 CornerRadius()
-    {
-        var vec = new Vector4(_cornerRadius.y, _cornerRadius.height, _cornerRadius.x, _cornerRadius.width);
-        return vec;
-    }
-
     public void SetVertexData(VertexHelper fill)
     {
         UIVertex vert = UIVertex.simpleVert;
         
         var rect = _imageGraphic.GetPixelAdjustedRect();
-        var uv1 = CornerRadius();
+        var uv1 = GetCorners();
         var uv2 = new Vector4(rect.width, rect.height, _stroke, 0);
         
         for (int i = 0; i < fill.currentVertCount; i++)
@@ -125,8 +109,6 @@ public class Imagine : MonoBehaviour
             fill.SetUIVertex(vert, i);
         }
     }
-
-
 }
 
 
