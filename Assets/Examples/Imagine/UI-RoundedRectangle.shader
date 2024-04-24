@@ -74,11 +74,13 @@ Shader "UI/Rounded Rectangle (VertexInput)"
                 fixed4 color    : COLOR;
                 float2 texcoord  : TEXCOORD0;
                 float4 cornerRadius  : TEXCOORD1;
-                float2 size  : TEXCOORD2;
+                float2 resolution  : TEXCOORD2;
                 float stroke  : TEXCOORD3;
-                float4 worldPosition : TEXCOORD4;
-                float4 mask : TEXCOORD5;
-                float pixelSize : TEXCOORD6;
+                float blur  : TEXCOORD4;
+                float4 worldPosition : TEXCOORD5;
+                float4 mask : TEXCOORD6;
+                float pixelSize : TEXCOORD7;
+                float pos : TEXCOORD8;
                 
                 UNITY_VERTEX_OUTPUT_STEREO
             };
@@ -110,9 +112,11 @@ Shader "UI/Rounded Rectangle (VertexInput)"
 
                 OUT.color = v.color * _Color;
 
+                OUT.pos = v.texcoord.xy;
                 OUT.cornerRadius = v.uv1;
-                OUT.size = v.uv2.xy;
+                OUT.resolution = v.uv2.xy;
                 OUT.stroke = v.uv2.z;
+                OUT.blur = v.uv2.w;
                 OUT.pixelSize = pixelSize;
                 
                 return OUT;
@@ -120,34 +124,22 @@ Shader "UI/Rounded Rectangle (VertexInput)"
 
             half roundedRectangle(float2 uv, float2 size, float4 corner)
             {
-                // Compute distances from uv to rectangle edges
                 half4 distances = half4(uv, size.x - uv.x, size.y - uv.y);
-                
-                // Find minimum distance
                 half minDistance = min(min(min(distances.x, distances.y), distances.z), distances.w);
                 
-                // Determine if uv is within rounded corners
-                bool4 withinCorners = bool4(all(distances.xw < corner[0]),
+                bool4 corners = bool4(all(distances.xw < corner[0]),
                                              all(distances.zw < corner[1]),
                                              all(distances.zy < corner[2]),
                                              all(distances.xy < corner[3]));
                 
-                // Compute distances from uv to corner points
                 half4 cornerDistances = corner - half4(length(distances.xw - corner[0]),
                                                        length(distances.zw - corner[1]),
                                                        length(distances.zy - corner[2]),
                                                        length(distances.xy - corner[3]));
                 
-                // Clamp corner distances to be non-negative
                 half4 clampedCornerDistances = max(cornerDistances, 0);
-                
-                // Calculate final distances
-                half4 finalDistances = min(withinCorners * clampedCornerDistances, minDistance) + (1 - withinCorners) * minDistance;
-                
-                // Compute minimum final distance
-                half minFinalDistance = min(min(min(finalDistances.x, finalDistances.y), finalDistances.z), finalDistances.w);
-                
-                return minFinalDistance;
+                half4 distance = min(corners * clampedCornerDistances, minDistance) + (1 - corners) * minDistance;
+                return min(min(min(distance.x, distance.y), distance.z), distance.w);
             }
 
             fixed4 frag(v2f IN) : SV_Target
@@ -159,7 +151,7 @@ Shader "UI/Rounded Rectangle (VertexInput)"
                 const half invAlphaPrecision = half(1.0/alphaPrecision);
                 IN.color.a = round(IN.color.a * alphaPrecision)*invAlphaPrecision;
 
-                half4 color = IN.color * (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd);
+                float4 color = IN.color * (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd);
 
                 #ifdef UNITY_UI_CLIP_RECT
                 half2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(IN.mask.xy)) * IN.mask.zw);
@@ -170,19 +162,12 @@ Shader "UI/Rounded Rectangle (VertexInput)"
                 clip (color.a - 0.001);
                 #endif
 
-                // roundedRectangle
-                half rect = roundedRectangle(IN.texcoord * IN.size, IN.size, IN.cornerRadius);
+                // ------------------------------------------------
+                half rect = roundedRectangle(IN.texcoord * IN.resolution, IN.resolution, IN.cornerRadius);
 
-                if(IN.stroke <= 0)
-                {
-                    color.a *= rect;
-                }
-                else
-                {
-                    float stroke = (IN.stroke + 1 / IN.pixelSize) / 2;
-				    color.a *= saturate((stroke - distance(rect, stroke)) * IN.pixelSize);
-                }
-				
+                float l = (IN.stroke + IN.blur) / 2;
+                color *= saturate((l-distance(rect,l)) * IN.blur);
+                // ------------------------------------------------
 				if(color.a <= 0)
 				{
 					discard;
