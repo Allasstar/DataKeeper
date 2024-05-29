@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DataKeeper.Extra.ActCore
+namespace DataKeeper.ActCore
 {
     public static class Lerp
     {

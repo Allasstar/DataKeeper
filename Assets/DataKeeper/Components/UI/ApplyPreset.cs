@@ -2,7 +2,7 @@
 using DataKeeper.Attributes;
 using UnityEngine;
 
-namespace DataKeeper.UI
+namespace DataKeeper.Components.UI
 {
     [AddComponentMenu("DataKeeper/UI/Apply Preset", 0)]
     public class ApplyPreset : MonoBehaviour

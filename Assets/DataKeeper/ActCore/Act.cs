@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
-namespace DataKeeper.Extra.ActCore
+namespace DataKeeper.ActCore
 {
     public static class Act
     {

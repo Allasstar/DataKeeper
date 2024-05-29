@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-namespace DataKeeper.Extra.ActCore
+namespace DataKeeper.ActCore
 {
     public class ActEngine : MonoBehaviour
     {
