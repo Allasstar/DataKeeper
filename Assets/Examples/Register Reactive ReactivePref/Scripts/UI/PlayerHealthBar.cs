@@ -1,3 +1,4 @@
+using DataKeeper.Debuger;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class PlayerHealthBar : MonoBehaviour
 
     private void Awake()
     {
+        Console.Start();
         _playerData = DK.Data.Get<PlayerDataSO>();
         _healthBar = GetComponent<Slider>();
 
@@ -31,5 +33,17 @@ public class PlayerHealthBar : MonoBehaviour
     private void OnHealthChanged(int value)
     {
         _healthBar.value = value;
+
+        if (value <= 30)
+        {
+            Debug.LogError($"E: OnHealthChanged: {value}");
+        } else if (value <= 50)
+        {
+            Debug.LogWarning($"W: OnHealthChanged: {value}");
+        }
+        else
+        {
+            Debug.Log($"OnHealthChanged: {value}");
+        }
     }
 }
