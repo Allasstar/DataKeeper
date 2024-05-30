@@ -34,6 +34,19 @@ namespace DataKeeper.Debuger
         {
             ReactiveLogData.Add(new LogData(type, condition, stacktrace));
         }
+        
+        public static Color GetLogColor(LogData data)
+        {
+            return data.Type switch
+            {
+                LogType.Error => Color.red,
+                LogType.Assert => Color.blue,
+                LogType.Warning => Color.yellow,
+                LogType.Log => Color.cyan,
+                LogType.Exception => Color.magenta,
+                _ => Color.black
+            };
+        }
     }
 
     public class LogData

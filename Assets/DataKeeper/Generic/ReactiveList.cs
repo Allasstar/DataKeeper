@@ -10,7 +10,8 @@ namespace DataKeeper.Generic
     public enum ListChangedEvent
     {
         Added = 0,
-        Removed = 1
+        Removed = 1,
+        Cleared = 2
     }
     
     [Serializable]
@@ -202,8 +203,8 @@ namespace DataKeeper.Generic
         /// </summary>
         public void Clear()
         {
-            for (int i = 0; i < Count; i++)
-                RemoveAt(i);
+            m_List.Clear();
+            OnListChanged?.Invoke(-1, default, ListChangedEvent.Cleared);
         }
 
         /// <summary>

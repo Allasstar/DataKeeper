@@ -36,14 +36,14 @@ public class PlayerHealthBar : MonoBehaviour
 
         if (value <= 30)
         {
-            Debug.LogError($"E: OnHealthChanged: {value}");
+            Debug.LogError($"!!: OnHealthChanged: {value}");
         } else if (value <= 50)
         {
-            Debug.LogWarning($"W: OnHealthChanged: {value}");
+            Debug.LogWarning($"@: OnHealthChanged: {value}");
         }
         else
         {
-            Debug.Log($"OnHealthChanged: {value}");
+            Debug.Log($"$OnHealthChanged: {value}");
         }
     }
 }

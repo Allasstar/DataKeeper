@@ -10,16 +10,19 @@ namespace DataKeeper.Debuger
         [SerializeField] private TextMeshProUGUI _logText;
         [SerializeField] private TextMeshProUGUI _logTime;
 
-        private LogType _logType;
-        private string _details;
+        public LogType LogType { get; private set; }
+        public string LogText { get; private set; }
+        public string LogDetails { get; private set; }
 
-        public void SetLog(LogType logType, Color color, string logText, string logTime, string details)
+        public void SetLog(LogType logType, Color color, string logText, string logTime, string logDetails)
         {
-            _logType = logType;
+            LogType = logType;
+            LogText = logText;
+            LogDetails = logDetails;
+
             _image.color = color;
             _logText.text = logText;
             _logTime.text = logTime;
-            _details = details;
         }
     }
 }

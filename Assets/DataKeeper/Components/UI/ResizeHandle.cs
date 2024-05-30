@@ -14,6 +14,7 @@ namespace DataKeeper.Components.UI
         private void Awake()
         {
             _targetRect.pivot = Vector2.up;
+            FitInScreen();
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -24,9 +25,23 @@ namespace DataKeeper.Components.UI
             _targetPos = _targetRect.position;
         }
 
+        private void FitInScreen()
+        {
+            var size = _targetRect.sizeDelta;
+
+            size.x = Mathf.Min(Screen.width, size.x);
+            size.y = Mathf.Min(Screen.height, size.y);
+
+            _targetRect.sizeDelta = size;
+        }
+
         public void OnDrag(PointerEventData eventData)
         {
-            _targetRect.sizeDelta = Vector2.Max(_minSize, (eventData.position - _targetPos) * _invertY);
+            var size = Vector2.Max(_minSize, (eventData.position - _targetPos) * _invertY);
+            size.x = Mathf.Min(Screen.width, size.x);
+            size.y = Mathf.Min(Screen.height, size.y);
+            
+            _targetRect.sizeDelta = size;
         }
     }
 }
