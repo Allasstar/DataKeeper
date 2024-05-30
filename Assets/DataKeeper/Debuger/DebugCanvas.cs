@@ -1,4 +1,3 @@
-using System;
 using DataKeeper.Generic;
 using UnityEngine;
 
@@ -25,25 +24,16 @@ namespace DataKeeper.Debuger
             l.transform.parent = _logContainer;
             l.gameObject.SetActive(true);
 
-            var color = Color.black;
-            switch (data.Type)
+            var color = data.Type switch
             {
-                case LogType.Error:
-                    color = Color.red;
-                    break;
-                case LogType.Assert:
-                    color = Color.blue;
-                    break;
-                case LogType.Warning:
-                    color = Color.yellow;
-                    break;
-                case LogType.Log:
-                    color = Color.cyan;
-                    break;
-                case LogType.Exception:
-                    color = Color.magenta;
-                    break;
-            }
+                LogType.Error => Color.red,
+                LogType.Assert => Color.blue,
+                LogType.Warning => Color.yellow,
+                LogType.Log => Color.cyan,
+                LogType.Exception => Color.magenta,
+                _ => Color.black
+            };
+
             l.SetLog(data.Type, color, data.Condition, Time.time.ToString(), data.Stacktrace);
         }
     }
