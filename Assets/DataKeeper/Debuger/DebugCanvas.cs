@@ -20,6 +20,7 @@ namespace DataKeeper.Debuger
         
         private void Awake()
         {
+            DontDestroyOnLoad(gameObject);
             _logButtonPool = new ObjectPool<LogButton>(CreateFunc, ActionOnGet, ActionOnRelease);
         }
 
@@ -31,6 +32,7 @@ namespace DataKeeper.Debuger
         private void ActionOnGet(LogButton logButton)
         {
             logButton.transform.SetAsLastSibling();
+            logButton.Reset();
             logButton.transform.localScale = Vector3.one;
         }
 
