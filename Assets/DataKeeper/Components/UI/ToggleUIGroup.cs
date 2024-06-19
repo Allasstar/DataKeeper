@@ -1,12 +1,12 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace DataKeeper.UI
+namespace DataKeeper.Components.UI
 {
-    [AddComponentMenu("UI/DataKeeper/Toggle UI Group")]
+    [AddComponentMenu("DataKeeper/UI/Toggle UI Group")]
     [DisallowMultipleComponent]
     /// <summary>
     /// A component that represents a group of UI.Toggles.

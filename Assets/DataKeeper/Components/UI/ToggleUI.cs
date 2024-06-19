@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace DataKeeper.UI
+namespace DataKeeper.Components.UI
 {
-    [AddComponentMenu("UI/DataKeeper/Toggle")]
+    [AddComponentMenu("DataKeeper/UI/Toggle UI")]
     [RequireComponent(typeof(RectTransform))]
     public class ToggleUI : Selectable, IPointerClickHandler, ISubmitHandler, ICanvasElement
     {
