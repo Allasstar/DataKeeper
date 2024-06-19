@@ -253,6 +253,3 @@ namespace DataKeeper.Components.UI
 
     }
 }
-
-
-        
