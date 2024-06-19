@@ -19,8 +19,8 @@ namespace DataKeeper.Editor.UI
         SerializedProperty m_IconSpriteProperty;
         SerializedProperty m_IconColorProperty;
         
-        SerializedProperty m_TextProperty;
-        SerializedProperty m_TextColorProperty;
+        SerializedProperty m_LabelProperty;
+        SerializedProperty m_LabelColorProperty;
         
         SerializedProperty m_OnValueChangedProperty;
 
@@ -35,8 +35,8 @@ namespace DataKeeper.Editor.UI
             m_IconSpriteProperty = serializedObject.FindProperty("_iconSprite");
             m_IconColorProperty = serializedObject.FindProperty("_iconColor");
             
-            m_TextProperty = serializedObject.FindProperty("text");
-            m_TextColorProperty = serializedObject.FindProperty("_textColor");
+            m_LabelProperty = serializedObject.FindProperty("label");
+            m_LabelColorProperty = serializedObject.FindProperty("_labelColor");
             
             m_OnValueChangedProperty = serializedObject.FindProperty("onValueChanged");
         }
@@ -57,8 +57,8 @@ namespace DataKeeper.Editor.UI
             EditorGUILayout.PropertyField(m_IconSpriteProperty);
             EditorGUILayout.PropertyField(m_IconColorProperty);
             
-            EditorGUILayout.PropertyField(m_TextProperty);
-            EditorGUILayout.PropertyField(m_TextColorProperty);
+            EditorGUILayout.PropertyField(m_LabelProperty);
+            EditorGUILayout.PropertyField(m_LabelColorProperty);
            
 
             EditorGUILayout.Space();

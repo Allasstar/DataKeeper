@@ -1552,8 +1552,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281651548
-  m_fontColor: {r: 0.35957596, g: 0.8207547, b: 0.20518868, a: 1}
+    rgba: 4291577553
+  m_fontColor: {r: 0.8207547, g: 0.27410105, b: 0.79901266, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2227,7 +2227,7 @@ GameObject:
   - component: {fileID: 517061531}
   - component: {fileID: 517061530}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Test Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6013,12 +6013,12 @@ MonoBehaviour:
     value:
       <On>k__BackingField: {r: 0.33554474, g: 1, b: 0.26666665, a: 1}
       <Off>k__BackingField: {r: 0.92131704, g: 0.2666667, b: 0.9254902, a: 1}
-  text: {fileID: 1329580795}
-  _textColor:
-    enabled: 1
+  label: {fileID: 0}
+  _labelColor:
+    enabled: 0
     value:
-      <On>k__BackingField: {r: 0.35957596, g: 0.8207547, b: 0.20518868, a: 1}
-      <Off>k__BackingField: {r: 0.8301887, g: 0.254539, b: 0.254539, a: 1}
+      <On>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
+      <Off>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -7313,12 +7313,12 @@ MonoBehaviour:
     value:
       <On>k__BackingField: {r: 0.33554474, g: 1, b: 0.26666665, a: 1}
       <Off>k__BackingField: {r: 0.92131704, g: 0.2666667, b: 0.9254902, a: 1}
-  text: {fileID: 320862474}
-  _textColor:
+  label: {fileID: 320862474}
+  _labelColor:
     enabled: 1
     value:
-      <On>k__BackingField: {r: 0.35957596, g: 0.8207547, b: 0.20518868, a: 1}
-      <Off>k__BackingField: {r: 0.8301887, g: 0.254539, b: 0.254539, a: 1}
+      <On>k__BackingField: {r: 0.8207547, g: 0.27410105, b: 0.79901266, a: 1}
+      <Off>k__BackingField: {r: 1, g: 0.91254044, b: 0, a: 1}
   onValueChanged:
     m_PersistentCalls:
       m_Calls:

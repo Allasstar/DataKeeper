@@ -25,17 +25,17 @@ namespace DataKeeper.Components.UI
         public Optional<ToggleSprite> _iconSprite = new Optional<ToggleSprite>();
         public Optional<ToggleColor> _iconColor = new Optional<ToggleColor>();
 
-        [field: SerializeField, Space] public TextMeshProUGUI text;
-        public Optional<ToggleColor> _textColor = new Optional<ToggleColor>();
+        [field: SerializeField, Space] public TextMeshProUGUI label;
+        public Optional<ToggleColor> _labelColor = new Optional<ToggleColor>();
         
         [Space]
         public UnityEvent<bool> onValueChanged = new UnityEvent<bool>();
         
         public void UpdateUI()
         {
-            if (text != null && _textColor.Enabled)
+            if (label != null && _labelColor.Enabled)
             {
-                text.color = m_IsOn ? _textColor.Value.On : _textColor.Value.Off;
+                label.color = m_IsOn ? _labelColor.Value.On : _labelColor.Value.Off;
             }
             
             if(icon == null) return;
