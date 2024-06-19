@@ -16,7 +16,7 @@ namespace DataKeeper.Components.UI
     /// </remarks>
     public class ToggleUIGroup : UIBehaviour
     {
-        [SerializeField] private bool m_AllowSwitchOff = false;
+       [SerializeField] private bool m_AllowSwitchOff = false;
 
         /// <summary>
         /// Is it allowed that no toggle is switched on?
@@ -71,7 +71,7 @@ namespace DataKeeper.Components.UI
                 if (sendCallback)
                     m_Toggles[i].isOn = false;
                 else
-                    m_Toggles[i].onValueChanged.SilentValue = false;
+                    m_Toggles[i].SetIsOnWithoutNotify(false);
             }
         }
 
@@ -177,7 +177,7 @@ namespace DataKeeper.Components.UI
             else
             {
                 for (var i = 0; i < m_Toggles.Count; i++)
-                    m_Toggles[i].onValueChanged.SilentValue = false;
+                    m_Toggles[i].SetIsOnWithoutNotify(false);
             }
 
             m_AllowSwitchOff = oldAllowSwitchOff;
