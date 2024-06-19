@@ -20,34 +20,34 @@ namespace DataKeeper.Components.UI
         
         [SerializeField]
         private ToggleUIGroup m_Group;
-        
-        [field: SerializeField, Space] public Image Icon { private set; get; }
+
+        [field: SerializeField, Space] public Image icon;
         public Optional<ToggleSprite> _iconSprite = new Optional<ToggleSprite>();
         public Optional<ToggleColor> _iconColor = new Optional<ToggleColor>();
-    
-        [field: SerializeField, Space] public TextMeshProUGUI Text { private set; get; }
+
+        [field: SerializeField, Space] public TextMeshProUGUI text;
         public Optional<ToggleColor> _textColor = new Optional<ToggleColor>();
         
         [Space]
         public UnityEvent<bool> onValueChanged = new UnityEvent<bool>();
         
-        private void UpdateUI()
+        public void UpdateUI()
         {
-            if (Text != null && _textColor.Enabled)
+            if (text != null && _textColor.Enabled)
             {
-                Text.color = m_IsOn ? _textColor.Value.On : _textColor.Value.Off;
+                text.color = m_IsOn ? _textColor.Value.On : _textColor.Value.Off;
             }
             
-            if(Icon == null) return;
+            if(icon == null) return;
             
             if (_iconSprite.Enabled)
             {
-                Icon.sprite = m_IsOn ? _iconSprite.Value.On : _iconSprite.Value.Off;
+                icon.sprite = m_IsOn ? _iconSprite.Value.On : _iconSprite.Value.Off;
             }
             
             if (_iconColor.Enabled)
             {
-                Icon.color = m_IsOn ? _iconColor.Value.On : _iconColor.Value.Off;
+                icon.color = m_IsOn ? _iconColor.Value.On : _iconColor.Value.Off;
             }
         }
 
@@ -71,7 +71,13 @@ namespace DataKeeper.Components.UI
         protected override void OnValidate()
         {
             base.OnValidate();
-            
+            ForceUpdate();
+            if (!UnityEditor.PrefabUtility.IsPartOfPrefabAsset(this) && !Application.isPlaying)
+                CanvasUpdateRegistry.RegisterCanvasElementForLayoutRebuild(this);
+        }
+
+        public void ForceUpdate()
+        {
             SetToggleGroup(m_Group, false);
             if (group != null && IsActive())
             {
@@ -82,9 +88,9 @@ namespace DataKeeper.Components.UI
                 }
             }
             UpdateUI();
-            if (!UnityEditor.PrefabUtility.IsPartOfPrefabAsset(this) && !Application.isPlaying)
-                CanvasUpdateRegistry.RegisterCanvasElementForLayoutRebuild(this);
         }
+        
+        
 
 #endif // if UNITY_EDITOR
 
@@ -124,19 +130,7 @@ namespace DataKeeper.Components.UI
 
         protected override void OnDidApplyAnimationProperties()
         {
-            // Check if isOn has been changed by the animation.
-            // Unfortunately there is no way to check if we don�t have a graphic.
-            // if (graphic != null)
-            // {
-            //     bool oldValue = !Mathf.Approximately(graphic.canvasRenderer.GetColor().a, 0);
-            //     if (m_IsOn != oldValue)
-            //     {
-            //         m_IsOn = oldValue;
-            //         Set(!oldValue);
-            //     }
-            // }
-            //
-            // base.OnDidApplyAnimationProperties();
+
         }
 
         private void SetToggleGroup(ToggleUIGroup newGroup, bool setMemberValue)
@@ -164,43 +158,6 @@ namespace DataKeeper.Components.UI
         /// <summary>
         /// Whether the toggle is currently active.
         /// </summary>
-        /// <example>
-        /// <code>
-        /// <![CDATA[
-        /// /Attach this script to a Toggle GameObject. To do this, go to Create>UI>Toggle.
-        /// //Set your own Text in the Inspector window
-        ///
-        /// using UnityEngine;
-        /// using UnityEngine.UI;
-        ///
-        /// public class Example : MonoBehaviour
-        /// {
-        ///     Toggle m_Toggle;
-        ///     public Text m_Text;
-        ///
-        ///     void Start()
-        ///     {
-        ///         //Fetch the Toggle GameObject
-        ///         m_Toggle = GetComponent<Toggle>();
-        ///         //Add listener for when the state of the Toggle changes, and output the state
-        ///         m_Toggle.onValueChanged.AddListener(delegate {
-        ///                 ToggleValueChanged(m_Toggle);
-        ///             });
-        ///
-        ///         //Initialize the Text to say whether the Toggle is in a positive or negative state
-        ///         m_Text.text = "Toggle is : " + m_Toggle.isOn;
-        ///     }
-        ///
-        ///     //Output the new state of the Toggle into Text when the user uses the Toggle
-        ///     void ToggleValueChanged(Toggle change)
-        ///     {
-        ///         m_Text.text =  "Toggle is : " + m_Toggle.isOn;
-        ///     }
-        /// }
-        /// ]]>
-        ///</code>
-        /// </example>
-
         public bool isOn
         {
             get { return m_IsOn; }
