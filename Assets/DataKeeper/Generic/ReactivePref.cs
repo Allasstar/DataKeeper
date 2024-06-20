@@ -32,7 +32,7 @@ namespace DataKeeper.Generic
         
         public void Load()
         {
-            switch (value)
+            switch (DefaultValue)
             {
                 case int i:
                     value = (T)(object)PlayerPrefs.GetInt(Key, i);
