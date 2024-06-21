@@ -311,67 +311,43 @@ fixed4 fragFunctionRaw(float2 uv, float2 worldPosition, float4 color, float dist
 {
     float4 effects;
 
-    // float embossDist = dist + _EmbossDistance;
-    // float embossSizeDist = dist + _EmbossDistance + _EmbossSize;
-
-    float outlineDist = dist - _OutlineSize;
-    float shadowDist = dist - _ShadowSize;
+    // Adjust outline and shadow distances to be within the shape
+    float outlineDist = dist + _OutlineSize; // Adjust distance for inner outline
+    float shadowDist = dist - _ShadowSize;   // Adjust distance for inner shadow
     
     float delta = fwidth(dist * 0.5);
     float outlineDelta = fwidth(outlineDist);
     float shadowDelta = fwidth(shadowDist);
-    // float embossDelta = fwidth(embossDist);
-    // float embossSizeDelta = fwidth(embossSizeDist);
 
     // Calculate the different masks based on the SDF
     float graphicAlpha = smoothstep(delta, -delta, dist);
     float outlineAlpha = smoothstep(outlineDelta, -outlineDelta, outlineDist);
     float shadowAlpha = smoothstep(shadowDelta, -shadowDelta - _ShadowBlur, shadowDist);
 
-    // float embossStartAlpha = smoothstep(embossDelta - min(0, _EmbossBlurTop), -embossDelta - max(0, _EmbossBlurTop), embossDist);
-    // float embossEndAlpha = smoothstep(embossSizeDelta - min(0, _EmbossBlurBottom), -embossSizeDelta - max(0, _EmbossBlurBottom), embossSizeDist);
-
     float4 graphic = float4(color.rgb, color.a);
     float4 outline = float4(_OutlineColor.rgb, _OutlineColor.a);
     float4 shadow = float4(_ShadowColor.rgb, _ShadowColor.a);
 
-    // float circleSDF = distance(position, _CirclePos) - _CircleRadius;
-    // float circleDelta = fwidth(circleSDF);
-    // float circleAASDF = smoothstep(circleDelta, -circleDelta, circleSDF);
+    // Mix the graphic, outline, and shadow based on alpha values
+    effects = lerp(graphic, shadow, _ShadowSize > _OutlineSize ? shadowAlpha : 0);
+    effects = lerp(effects, outline, _OutlineSize > 0 ? outlineAlpha : 0);
 
-    // float light = dot(normal, rotate(float2(0, 1), _EmbossDirection));
-
-    // if (light > 0)
-         // light *= _EmbossHPower;
-    // else light *= _EmbossLPower;
-
-    // light = sign(light) * pow(abs(light), (_EmbossStrength * 50) + 1);
-
-
-    // float4 lightTint = float4(_EmbossHColor.r, _EmbossHColor.g, _EmbossHColor.b, 1);
-    // float4 shadowTint = float4(_EmbossLColor.r, _EmbossLColor.g, _EmbossLColor.b, 1);
-    // float4 lightColor = lerp(graphic, (light > 0 ? lightTint : shadowTint), abs(light));
-
-    // graphic = lerp(graphic, lightColor, _EmbossSize > 0 ? (embossStartAlpha - embossEndAlpha) : 0);
-    // graphic = lerp(graphic, float4(_CircleColor.rgb, _CircleAlpha), _CircleRadius > 0 ? circleAASDF * _CircleAlpha : 0);
-
-    effects = lerp(graphic, outline, _OutlineSize > 0 ? 1 - graphicAlpha : 0);
-    effects = lerp(effects, shadow, _ShadowSize > _OutlineSize ? 1 - outlineAlpha : 0);
-
+    // Ensure the final alpha combines all effects correctly
     effects.a *= max(graphicAlpha, max(outlineAlpha, shadowAlpha));
     effects.a *= _Alpha;
 
-    // Unity stuff
+    // Unity UI clipping and alpha clipping
     #ifdef UNITY_UI_CLIP_RECT
     effects.a *= UnityGet2DClipping(worldPosition.xy, _ClipRect);
     #endif
 
     #ifdef UNITY_UI_ALPHACLIP
-    clip (effects.a - 0.001);
+    clip(effects.a - 0.001);
     #endif
 
     return effects;
 }
+
 
 fixed4 fragFunction(float2 uv, float2 worldPosition, float4 color, float dist, float2 position, float2 halfSize, float2 normal)
 {
