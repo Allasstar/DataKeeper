@@ -65,7 +65,7 @@ namespace DataKeeper.Editor
 
         private static bool IsKeyPressed()
         {
-            return Input.GetKey(KeyCode.Tab);
+            return Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift);
         }
 
         private static List<RaycastResult> RaycastMouse()

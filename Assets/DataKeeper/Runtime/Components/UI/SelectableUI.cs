@@ -15,9 +15,9 @@ namespace DataKeeper.Components.UI
     public class SelectableUI : Selectable
     {
         [SerializeField, Space]
-        private Optional<SelectableColorPalette> _selectableColorPalette = new Optional<SelectableColorPalette>();
+        private Optional<SelectableColorPalette> _overrideTransitionColor = new Optional<SelectableColorPalette>();
 
-        private ColorBlock colorBlock => _selectableColorPalette.Enabled && _selectableColorPalette.Value != null ? _selectableColorPalette.Value.ColorBlock : colors;
+        private ColorBlock colorBlock => _overrideTransitionColor.Enabled && _overrideTransitionColor.Value != null ? _overrideTransitionColor.Value.ColorBlock : colors;
         MethodInfo triggerAnimation = typeof(Selectable).GetMethod("TriggerAnimation", BindingFlags.NonPublic | BindingFlags.Instance);
         
         protected override void DoStateTransition(SelectionState state, bool instant)

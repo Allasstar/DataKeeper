@@ -12,8 +12,8 @@ namespace DataKeeper.Editor.UI
     /// </summary>
     public class SelectableUIEditor : SelectableEditor
     {
-        SerializedProperty colorPaletteProperty;
-        SerializedProperty transitionProperty;
+        SerializedProperty _overrideTransitionColorProperty;
+        SerializedProperty _transitionProperty;
         
         static Selectable.Transition GetTransition(SerializedProperty transition)
         {
@@ -24,18 +24,18 @@ namespace DataKeeper.Editor.UI
         {
             base.OnEnable();
             
-            colorPaletteProperty = serializedObject.FindProperty("_selectableColorPalette");
-            transitionProperty = serializedObject.FindProperty("m_Transition");
+            _overrideTransitionColorProperty = serializedObject.FindProperty("_overrideTransitionColor");
+            _transitionProperty = serializedObject.FindProperty("m_Transition");
         }
 
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
             
-            if (GetTransition(transitionProperty) == Selectable.Transition.ColorTint)
+            if (GetTransition(_transitionProperty) == Selectable.Transition.ColorTint)
             {
                 EditorGUILayout.Space();
-                EditorGUILayout.PropertyField(colorPaletteProperty);
+                EditorGUILayout.PropertyField(_overrideTransitionColorProperty);
             }
 
             serializedObject.ApplyModifiedProperties();
