@@ -10,7 +10,7 @@ namespace DataKeeper.Editor.UI
     ///   Custom Editor for the Button Component.
     ///   Extend this class to write a custom editor for an Button-derived component.
     /// </summary>
-    public class ButtonEditor : SelectableEditor
+    public class ButtonEditor : SelectableUIEditor
     {
         SerializedProperty m_textProperty;
         SerializedProperty m_OnClickProperty;

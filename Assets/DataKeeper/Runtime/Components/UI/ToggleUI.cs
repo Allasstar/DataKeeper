@@ -10,7 +10,7 @@ namespace DataKeeper.Components.UI
 {
     [AddComponentMenu("DataKeeper/UI/Toggle UI")]
     [RequireComponent(typeof(RectTransform))]
-    public class ToggleUI : Selectable, IPointerClickHandler, ISubmitHandler, ICanvasElement
+    public class ToggleUI : SelectableUI, IPointerClickHandler, ISubmitHandler, ICanvasElement
     {
         
         // Whether the toggle is on

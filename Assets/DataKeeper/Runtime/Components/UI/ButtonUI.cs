@@ -4,13 +4,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 namespace DataKeeper.Components.UI
 {
     [AddComponentMenu("DataKeeper/UI/Button UI")]
     [RequireComponent(typeof(RectTransform))]
-    public class ButtonUI : Selectable, IPointerClickHandler, ISubmitHandler
+    public class ButtonUI : SelectableUI, IPointerClickHandler, ISubmitHandler
     {
         [Space] public TextMeshProUGUI label;
         

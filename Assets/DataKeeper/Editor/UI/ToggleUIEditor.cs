@@ -10,7 +10,7 @@ namespace DataKeeper.Editor.UI
     ///   Custom Editor for the ToggleUI Component.
     ///   Extend this class to write a custom editor for an Toggle-derived component.
     /// </summary>
-    public class ToggleUIEditor : SelectableEditor
+    public class ToggleUIEditor : SelectableUIEditor
     {
         SerializedProperty m_IsOnProperty;
         SerializedProperty m_GroupProperty;
