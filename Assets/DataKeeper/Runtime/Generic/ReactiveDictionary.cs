@@ -235,5 +235,16 @@ namespace DataKeeper.Generic
         {
             return GetEnumerator();
         }
+        
+        /// <summary>
+        /// Manually Invoke Update Event
+        /// </summary>
+        /// <param name="index"></param>
+        public void InvokeUpdateEvent(TKey key)
+        {
+            if(!m_Dictionary.ContainsKey(key)) return;
+            
+            OnDictionaryChanged?.Invoke(key, m_Dictionary[key], DictionaryChangedEvent.Updated);
+        }
     }
 }
