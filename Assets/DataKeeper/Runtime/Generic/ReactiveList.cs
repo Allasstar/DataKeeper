@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DataKeeper.Extensions;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,7 +12,8 @@ namespace DataKeeper.Generic
     {
         Added = 0,
         Removed = 1,
-        Cleared = 2
+        Updated = 2,
+        Cleared = 3
     }
     
     [Serializable]
@@ -233,6 +235,28 @@ namespace DataKeeper.Generic
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        /// <summary>
+        /// Manually Invoke Update Event
+        /// </summary>
+        /// <param name="index"></param>
+        public void InvokeUpdateEvent(int index)
+        {
+            if(!m_List.HasIndex(index)) return;
+            
+            OnListChanged?.Invoke(index, m_List[index], ListChangedEvent.Updated);
+        }
+        
+        /// <summary>
+        /// Manually Invoke Update Event
+        /// </summary>
+        /// <param name="value"></param>
+        public void InvokeUpdateEvent(T value)
+        {
+            if(!m_List.Contains(value)) return;
+            
+            OnListChanged?.Invoke(m_List.IndexOf(value), value, ListChangedEvent.Updated);
         }
     }
 }
