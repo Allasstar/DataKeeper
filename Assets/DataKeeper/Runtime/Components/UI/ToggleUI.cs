@@ -35,35 +35,34 @@ namespace DataKeeper.Components.UI
         
         public void UpdateUI()
         {
-            if (label != null)
+            if (icon != null)
             {
-                if (_labelColor.Enabled)
+                if (_iconSprite.Enabled)
                 {
-                    label.color = m_IsOn ? _labelColor.Value.On : _labelColor.Value.Off;
+                    icon.sprite = m_IsOn ? _iconSprite.Value.On : _iconSprite.Value.Off;
                 }
                 
-                if (_labelFontStyle.Enabled)
+                if (_iconColor.Enabled)
                 {
-                    label.fontStyle = m_IsOn ? _labelFontStyle.Value.On : _labelFontStyle.Value.Off;
-                }
-                
-                if (_labelText.Enabled)
-                {
-                    label.text = m_IsOn ? _labelText.Value.On : _labelText.Value.Off;
+                    icon.color = m_IsOn ? _iconColor.Value.On : _iconColor.Value.Off;
                 }
             }
-           
             
-            if(icon == null) return;
+            if (label == null) return;
             
-            if (_iconSprite.Enabled)
+            if (_labelColor.Enabled)
             {
-                icon.sprite = m_IsOn ? _iconSprite.Value.On : _iconSprite.Value.Off;
+                label.color = m_IsOn ? _labelColor.Value.On : _labelColor.Value.Off;
             }
             
-            if (_iconColor.Enabled)
+            if (_labelFontStyle.Enabled)
             {
-                icon.color = m_IsOn ? _iconColor.Value.On : _iconColor.Value.Off;
+                label.fontStyle = m_IsOn ? _labelFontStyle.Value.On : _labelFontStyle.Value.Off;
+            }
+            
+            if (_labelText.Enabled)
+            {
+                label.text = m_IsOn ? _labelText.Value.On : _labelText.Value.Off;
             }
         }
 
