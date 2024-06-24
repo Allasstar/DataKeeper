@@ -26,17 +26,33 @@ namespace DataKeeper.Components.UI
         public Optional<ToggleColor> _iconColor = new Optional<ToggleColor>();
 
         [field: SerializeField, Space] public TextMeshProUGUI label;
+        public Optional<ToggleString> _labelText = new Optional<ToggleString>();
         public Optional<ToggleColor> _labelColor = new Optional<ToggleColor>();
+        public Optional<ToggleFontStyle> _labelFontStyle = new Optional<ToggleFontStyle>();
         
         [Space]
         public UnityEvent<bool> onValueChanged = new UnityEvent<bool>();
         
         public void UpdateUI()
         {
-            if (label != null && _labelColor.Enabled)
+            if (label != null)
             {
-                label.color = m_IsOn ? _labelColor.Value.On : _labelColor.Value.Off;
+                if (_labelColor.Enabled)
+                {
+                    label.color = m_IsOn ? _labelColor.Value.On : _labelColor.Value.Off;
+                }
+                
+                if (_labelFontStyle.Enabled)
+                {
+                    label.fontStyle = m_IsOn ? _labelFontStyle.Value.On : _labelFontStyle.Value.Off;
+                }
+                
+                if (_labelText.Enabled)
+                {
+                    label.text = m_IsOn ? _labelText.Value.On : _labelText.Value.Off;
+                }
             }
+           
             
             if(icon == null) return;
             
@@ -247,9 +263,22 @@ namespace DataKeeper.Components.UI
         [Serializable]
         public class ToggleColor
         {
-            [field: SerializeField] public Color On { private set; get; } = Color.white;
-            [field: SerializeField] public Color Off { private set; get; } = Color.white;
+            [field: SerializeField] public Color On { private set; get; } = Color.green;
+            [field: SerializeField] public Color Off { private set; get; } = Color.red;
         }
 
+        [Serializable]
+        public class ToggleFontStyle
+        {
+            [field: SerializeField] public TMPro.FontStyles On { private set; get; } = TMPro.FontStyles.Bold;
+            [field: SerializeField] public TMPro.FontStyles Off { private set; get; } = TMPro.FontStyles.Normal;
+        }
+        
+        [Serializable]
+        public class ToggleString
+        {
+            [field: SerializeField] public string On { private set; get; } = "On";
+            [field: SerializeField] public string Off { private set; get; } = "Off";
+        }
     }
 }
