@@ -528,9 +528,8 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 135900393}
-  _selectableColorPalette:
-    enabled: 0
-    value: {fileID: 0}
+  _useSelectableColorPalette: 0
+  _selectableColorPalette: {fileID: 0}
   label: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
@@ -653,9 +652,8 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 186140159}
-  _selectableColorPalette:
-    enabled: 0
-    value: {fileID: 0}
+  _useSelectableColorPalette: 0
+  _selectableColorPalette: {fileID: 0}
 --- !u!114 &186140159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6020,7 +6018,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1540734518
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6090,7 +6088,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -6112,9 +6110,9 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1540734519}
-  _selectableColorPalette:
-    enabled: 0
-    value: {fileID: 0}
+  _useSelectableColorPalette: 1
+  _selectableColorPalette: {fileID: 11400000, guid: e148911ea6bc5bc499d5c296ced2595a,
+    type: 2}
   m_IsOn: 0
   m_Group: {fileID: 0}
   icon: {fileID: 0}

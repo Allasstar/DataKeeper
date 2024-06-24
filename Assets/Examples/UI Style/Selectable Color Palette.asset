@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Selectable Color Palette
   m_EditorClassIdentifier: 
   <ColorBlock>k__BackingField:
-    m_NormalColor: {r: 1, g: 0.17358488, b: 0.29039377, a: 1}
+    m_NormalColor: {r: 0.99607843, g: 0.20447338, b: 0, a: 1}
     m_HighlightedColor: {r: 0.071228355, g: 0.6509434, b: 0.07000708, a: 1}
     m_PressedColor: {r: 0.060028717, g: 0.3584906, b: 0, a: 1}
     m_SelectedColor: {r: 0, g: 1, b: 0.030623198, a: 1}

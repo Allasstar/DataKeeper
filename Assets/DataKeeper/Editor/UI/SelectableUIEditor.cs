@@ -26,9 +26,8 @@ namespace UnityEditor.UI
 
         GUIContent m_VisualizeNavigation = EditorGUIUtility.TrTextContent("Visualize", "Show navigation flows between selectable UI elements.");
 
-        SerializedProperty _overrideTransitionColorProperty;
-        SerializedProperty _colorPaletteEnabledProperty;
-        SerializedProperty _colorPaletteValueProperty;
+        SerializedProperty _useSelectableColorPaletteProperty;
+        SerializedProperty _selectableColorPaletteProperty;
 
         AnimBool m_ShowColorTint       = new AnimBool();
         AnimBool m_ShowSpriteTrasition = new AnimBool();
@@ -52,9 +51,9 @@ namespace UnityEditor.UI
             m_SpriteStateProperty   = serializedObject.FindProperty("m_SpriteState");
             m_AnimTriggerProperty   = serializedObject.FindProperty("m_AnimationTriggers");
             m_NavigationProperty    = serializedObject.FindProperty("m_Navigation");
-            _overrideTransitionColorProperty = serializedObject.FindProperty("_overrideTransitionColor");
-            _colorPaletteEnabledProperty = _overrideTransitionColorProperty.FindPropertyRelative("enabled");
-            _colorPaletteValueProperty = _overrideTransitionColorProperty.FindPropertyRelative("value");
+            
+            _useSelectableColorPaletteProperty = serializedObject.FindProperty("_useSelectableColorPalette");
+            _selectableColorPaletteProperty = serializedObject.FindProperty("_selectableColorPalette");
                 
             m_PropertyPathToExcludeForChildClasses = new[]
             {
@@ -91,7 +90,7 @@ namespace UnityEditor.UI
             RegisterStaticOnSceneGUI();
         }
 
-        private bool IsOverrideColorPalette() => _colorPaletteEnabledProperty.boolValue && _colorPaletteValueProperty.objectReferenceValue != null;
+        private bool IsOverrideColorPalette() => _useSelectableColorPaletteProperty.boolValue && _selectableColorPaletteProperty.objectReferenceValue != null;
 
         private void RegisterStaticOnSceneGUI()
         {
@@ -144,25 +143,28 @@ namespace UnityEditor.UI
                         break;
                 }
 
-                // Draw the foldout for the Optional<SelectableColorPalette>
-                EditorGUI.indentLevel--;
-                EditorGUILayout.PropertyField(_overrideTransitionColorProperty);
-                EditorGUI.indentLevel++;
-
-                if (IsOverrideColorPalette())
+                if (trans == Selectable.Transition.ColorTint)
                 {
-                    EditorGUI.indentLevel++;
-                
-                    // Draw here all fields from assigned to value scriptable object
-                    DrawPropertiesOfScriptableObject(_colorPaletteValueProperty.objectReferenceValue);
-                
-                    EditorGUI.indentLevel--;
-                }
-                else if (EditorGUILayout.BeginFadeGroup(m_ShowColorTint.faded))
-                {
-                    EditorGUILayout.PropertyField(m_ColorBlockProperty);
+                   
                 }
                 
+                if (EditorGUILayout.BeginFadeGroup(m_ShowColorTint.faded))
+                {
+                    EditorGUILayout.PropertyField(_useSelectableColorPaletteProperty);
+                    if (_useSelectableColorPaletteProperty.boolValue)
+                    {
+                        EditorGUI.indentLevel++;
+                        EditorGUILayout.PropertyField(_selectableColorPaletteProperty);
+                        if (IsOverrideColorPalette())
+                        {
+                            DrawPropertiesOfScriptableObject(_selectableColorPaletteProperty.objectReferenceValue);
+                        }
+                        EditorGUI.indentLevel--;
+                    }
+                    
+                    if(!IsOverrideColorPalette())
+                        EditorGUILayout.PropertyField(m_ColorBlockProperty);
+                }
  
                 EditorGUILayout.EndFadeGroup();
                 
