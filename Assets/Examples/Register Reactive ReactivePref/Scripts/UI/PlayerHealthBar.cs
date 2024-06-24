@@ -1,10 +1,13 @@
 using DataKeeper.Debuger;
+using DataKeeper.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Slider))]
 public class PlayerHealthBar : MonoBehaviour
 {
+    public SerializedDictionary<int, string> _test = new SerializedDictionary<int, string>();
+    
     private Slider _healthBar;
     private PlayerDataSO _playerData;
 
