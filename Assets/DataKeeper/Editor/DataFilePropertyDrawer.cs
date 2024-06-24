@@ -12,7 +12,8 @@ namespace DataKeeper.Editor
         private const float _space = 3f;
         
         IDataFile targetProperty;
-        
+        private Color _color = new Color(0.31f, 0.15f, 0.15f, 0.3f);
+
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             var valueProperty = property.FindPropertyRelative("data");
@@ -29,7 +30,7 @@ namespace DataKeeper.Editor
             label.tooltip = "Data File";
             EditorGUI.BeginProperty(position, label, property);
             
-            EditorGUI.DrawRect(new Rect(position.x, position.y + 1, position.width, _buttonWidth), new Color(0.31f, 0.15f, 0.15f));
+            EditorGUI.DrawRect(new Rect(position.x, position.y + 1, position.width, _buttonWidth), _color);
             
             Rect valuePosition = position;
             valuePosition.width -= _buttonWidth * 2 + _space * 2;
