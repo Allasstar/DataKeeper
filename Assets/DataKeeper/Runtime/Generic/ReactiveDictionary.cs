@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DataKeeper.Signals;
 using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace DataKeeper.Generic
 {
@@ -24,13 +24,13 @@ namespace DataKeeper.Generic
         /// On Dictionary Changed event.
         /// </summary>
         [NonSerialized]
-        public UnityEvent<TKey, TValue, DictionaryChangedEvent> OnDictionaryChanged = new UnityEvent<TKey, TValue, DictionaryChangedEvent>();
+        public Signal<TKey, TValue, DictionaryChangedEvent> OnDictionaryChanged = new Signal<TKey, TValue, DictionaryChangedEvent>();
 
         /// <summary>
         /// Add Listener.
         /// </summary>
         /// <param name="call"></param>
-        public void AddListener(UnityAction<TKey, TValue, DictionaryChangedEvent> call)
+        public void AddListener(Action<TKey, TValue, DictionaryChangedEvent> call)
         {
             OnDictionaryChanged.AddListener(call);
         }
@@ -39,7 +39,7 @@ namespace DataKeeper.Generic
         /// Remove Listener.
         /// </summary>
         /// <param name="call"></param>
-        public void RemoveListener(UnityAction<TKey, TValue, DictionaryChangedEvent> call)
+        public void RemoveListener(Action<TKey, TValue, DictionaryChangedEvent> call)
         {
             OnDictionaryChanged.RemoveListener(call);
         }

@@ -1,8 +1,8 @@
 using System;
 using DataKeeper.Extensions;
+using DataKeeper.Signals;
 using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace DataKeeper.Generic
 {
@@ -18,7 +18,7 @@ namespace DataKeeper.Generic
         
     
         [NonSerialized]
-        public UnityEvent<T> OnValueChanged = new UnityEvent<T>();
+        public Signal<T> OnValueChanged = new Signal<T>();
 
         private readonly bool _autoSave;
         private bool _isLoaded = false;
@@ -115,14 +115,14 @@ namespace DataKeeper.Generic
             this.value = value;
         }
 
-        public void AddListener(UnityAction<T> call, bool callOnAddListener = false)
+        public void AddListener(Action<T> call, bool callOnAddListener = false)
         {
             OnValueChanged.AddListener(call);
             
             if(callOnAddListener) OnValueChanged.Invoke(value);
         }
     
-        public void RemoveListener(UnityAction<T> call)
+        public void RemoveListener(Action<T> call)
         {
             OnValueChanged.RemoveListener(call);
         }

@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DataKeeper.Extensions;
+using DataKeeper.Signals;
 using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace DataKeeper.Generic
 {
@@ -25,14 +25,14 @@ namespace DataKeeper.Generic
         /// On List Changed event.
         /// </summary>
         [NonSerialized]
-        public UnityEvent<int, T, ListChangedEvent> OnListChanged = new UnityEvent<int, T, ListChangedEvent>();
+        public Signal<int, T, ListChangedEvent> OnListChanged = new Signal<int, T, ListChangedEvent>();
 
 
         /// <summary>
         /// Add Listener.
         /// </summary>
         /// <param name="call"></param>
-        public void AddListener(UnityAction<int, T, ListChangedEvent> call)
+        public void AddListener(Action<int, T, ListChangedEvent> call)
         {
             OnListChanged.AddListener(call);
         }
@@ -41,7 +41,7 @@ namespace DataKeeper.Generic
         /// Remove Listener.
         /// </summary>
         /// <param name="call"></param>
-        public void RemoveListener(UnityAction<int, T, ListChangedEvent> call)
+        public void RemoveListener(Action<int, T, ListChangedEvent> call)
         {
             OnListChanged.RemoveListener(call);
         }
