@@ -1,98 +1,82 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
-namespace DataKeeper.Components.UI
+[ExecuteInEditMode]
+public class WrapLayoutGroup : LayoutGroup
 {
-    public class WrapLayoutGroup : LayoutGroup
+    public float spacing = 5f;
+    public bool childForceExpandWidth = false;
+    public bool childForceExpandHeight = false;
+
+    private float m_ContentHeight;
+
+    public override void CalculateLayoutInputHorizontal()
     {
-        public enum Axis
+        base.CalculateLayoutInputHorizontal();
+        
+        float width = rectTransform.rect.width;
+        float x = 0f;
+        float y = 0f;
+        float rowHeight = 0f;
+
+        for (int i = 0; i < rectChildren.Count; i++)
         {
-            Horizontal = 0,
-            Vertical = 1
-        }
+            var item = rectChildren[i];
+            
+            var itemWidth = LayoutUtility.GetPreferredWidth(item);
+            var itemHeight = LayoutUtility.GetPreferredHeight(item);
 
-        public Axis startAxis = Axis.Horizontal;
-        public float spacing = 0f;
-
-        public override void CalculateLayoutInputHorizontal()
-        {
-            base.CalculateLayoutInputHorizontal();
-            CalculateLayout();
-        }
-
-        public override void CalculateLayoutInputVertical()
-        {
-            CalculateLayout();
-        }
-
-        public override void SetLayoutHorizontal()
-        {
-            SetChildrenAlongAxis(0);
-        }
-
-        public override void SetLayoutVertical()
-        {
-            SetChildrenAlongAxis(1);
-        }
-
-        private void CalculateLayout()
-        {
-            float currentMainAxisSize = 0f;
-            float currentCrossAxisSize = 0f;
-            float maxCrossAxisSize = 0f;
-
-            for (int i = 0; i < rectChildren.Count; i++)
+            if (x + itemWidth > width)
             {
-                RectTransform rect = rectChildren[i];
-
-                float mainAxisSize = startAxis == Axis.Horizontal ? rect.rect.width : rect.rect.height;
-                float crossAxisSize = startAxis == Axis.Horizontal ? rect.rect.height : rect.rect.width;
-
-                if (currentMainAxisSize + mainAxisSize + spacing > rectTransform.rect.size.x)
-                {
-                    currentMainAxisSize = 0f;
-                    currentCrossAxisSize += maxCrossAxisSize + spacing;
-                    maxCrossAxisSize = 0f;
-                }
-
-                currentMainAxisSize += mainAxisSize + spacing;
-                maxCrossAxisSize = Mathf.Max(maxCrossAxisSize, crossAxisSize);
+                x = 0;
+                y += rowHeight + spacing;
+                rowHeight = 0;
             }
+
+            rowHeight = Mathf.Max(rowHeight, itemHeight);
+            x += itemWidth + spacing;
         }
 
-        private void SetChildrenAlongAxis(int axis)
+        m_ContentHeight = y + rowHeight;
+    }
+
+    public override void SetLayoutHorizontal()
+    {
+        float width = rectTransform.rect.width;
+        float x = 0f;
+        float y = 0f;
+        float rowHeight = 0f;
+
+        for (int i = 0; i < rectChildren.Count; i++)
         {
-            float currentMainAxisSize = 0f;
-            float currentCrossAxisSize = 0f;
-            float maxCrossAxisSize = 0f;
+            var item = rectChildren[i];
+            
+            var itemWidth = LayoutUtility.GetPreferredWidth(item);
+            var itemHeight = LayoutUtility.GetPreferredHeight(item);
 
-            for (int i = 0; i < rectChildren.Count; i++)
+            if (x + itemWidth > width)
             {
-                RectTransform rect = rectChildren[i];
-                float mainAxisSize = startAxis == Axis.Horizontal ? rect.rect.width : rect.rect.height;
-                float crossAxisSize = startAxis == Axis.Horizontal ? rect.rect.height : rect.rect.width;
-
-                if (currentMainAxisSize + mainAxisSize + spacing > rectTransform.rect.size.x)
-                {
-                    currentMainAxisSize = 0f;
-                    currentCrossAxisSize += maxCrossAxisSize + spacing;
-                    maxCrossAxisSize = 0f;
-                }
-
-                if (startAxis == Axis.Horizontal)
-                {
-                    SetChildAlongAxis(rect, 0, currentMainAxisSize, mainAxisSize);
-                    SetChildAlongAxis(rect, 1, currentCrossAxisSize, crossAxisSize);
-                }
-                else
-                {
-                    SetChildAlongAxis(rect, 1, currentMainAxisSize, mainAxisSize);
-                    SetChildAlongAxis(rect, 0, currentCrossAxisSize, crossAxisSize);
-                }
-
-                currentMainAxisSize += mainAxisSize + spacing;
-                maxCrossAxisSize = Mathf.Max(maxCrossAxisSize, crossAxisSize);
+                x = 0;
+                y += rowHeight + spacing;
+                rowHeight = 0;
             }
+
+            SetChildAlongAxis(item, 0, x, itemWidth);
+            SetChildAlongAxis(item, 1, y, itemHeight);
+
+            rowHeight = Mathf.Max(rowHeight, itemHeight);
+            x += itemWidth + spacing;
         }
+    }
+
+    public override void SetLayoutVertical()
+    {
+        // Not needed as vertical layout is handled in SetLayoutHorizontal
+    }
+
+    public override void CalculateLayoutInputVertical()
+    {
+        SetLayoutInputForAxis(m_ContentHeight, m_ContentHeight, 0, 1);
     }
 }
