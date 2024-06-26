@@ -1,52 +1,54 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 [ExecuteInEditMode]
 public class WrapLayoutGroup : LayoutGroup
 {
-    public float spacing = 5f;
+    public float spacingX = 5f;
+    public float spacingY = 5f;
     public bool childForceExpandWidth = false;
     public bool childForceExpandHeight = false;
+    public enum Axis { Horizontal, Vertical }
+    public Axis mainAxis = Axis.Horizontal;
 
+    private float m_ContentWidth;
     private float m_ContentHeight;
 
     public override void CalculateLayoutInputHorizontal()
     {
         base.CalculateLayoutInputHorizontal();
         
-        float width = rectTransform.rect.width;
-        float x = 0f;
-        float y = 0f;
-        float rowHeight = 0f;
-
-        for (int i = 0; i < rectChildren.Count; i++)
-        {
-            var item = rectChildren[i];
-            
-            var itemWidth = LayoutUtility.GetPreferredWidth(item);
-            var itemHeight = LayoutUtility.GetPreferredHeight(item);
-
-            if (x + itemWidth > width)
-            {
-                x = 0;
-                y += rowHeight + spacing;
-                rowHeight = 0;
-            }
-
-            rowHeight = Mathf.Max(rowHeight, itemHeight);
-            x += itemWidth + spacing;
-        }
-
-        m_ContentHeight = y + rowHeight;
+        if (mainAxis == Axis.Horizontal)
+            CalculateLayoutHorizontal();
+        else
+            CalculateLayoutVertical();
     }
 
     public override void SetLayoutHorizontal()
     {
-        float width = rectTransform.rect.width;
-        float x = 0f;
-        float y = 0f;
+        SetLayout(0);
+    }
+
+    public override void SetLayoutVertical()
+    {
+        SetLayout(1);
+    }
+
+    public override void CalculateLayoutInputVertical()
+    {
+        if (mainAxis == Axis.Horizontal)
+            SetLayoutInputForAxis(m_ContentHeight, m_ContentHeight, 0, 1);
+        else
+            SetLayoutInputForAxis(m_ContentWidth, m_ContentWidth, 0, 0);
+    }
+
+    private void CalculateLayoutHorizontal()
+    {
+        float width = rectTransform.rect.width - padding.left - padding.right;
+        float x = padding.left;
+        float y = padding.top;
         float rowHeight = 0f;
+        m_ContentHeight = 0f;
 
         for (int i = 0; i < rectChildren.Count; i++)
         {
@@ -57,26 +59,93 @@ public class WrapLayoutGroup : LayoutGroup
 
             if (x + itemWidth > width)
             {
-                x = 0;
-                y += rowHeight + spacing;
+                x = padding.left;
+                y += rowHeight + spacingY;
                 rowHeight = 0;
             }
 
-            SetChildAlongAxis(item, 0, x, itemWidth);
-            SetChildAlongAxis(item, 1, y, itemHeight);
-
             rowHeight = Mathf.Max(rowHeight, itemHeight);
-            x += itemWidth + spacing;
+            x += itemWidth + spacingX;
         }
+
+        m_ContentHeight = y + rowHeight + padding.bottom;
     }
 
-    public override void SetLayoutVertical()
+    private void CalculateLayoutVertical()
     {
-        // Not needed as vertical layout is handled in SetLayoutHorizontal
+        float height = rectTransform.rect.height - padding.top - padding.bottom;
+        float x = padding.left;
+        float y = padding.top;
+        float columnWidth = 0f;
+        m_ContentWidth = 0f;
+
+        for (int i = 0; i < rectChildren.Count; i++)
+        {
+            var item = rectChildren[i];
+            
+            var itemWidth = LayoutUtility.GetPreferredWidth(item);
+            var itemHeight = LayoutUtility.GetPreferredHeight(item);
+
+            if (y + itemHeight > height)
+            {
+                y = padding.top;
+                x += columnWidth + spacingX;
+                columnWidth = 0;
+            }
+
+            columnWidth = Mathf.Max(columnWidth, itemWidth);
+            y += itemHeight + spacingY;
+        }
+
+        m_ContentWidth = x + columnWidth + padding.right;
     }
 
-    public override void CalculateLayoutInputVertical()
+    private void SetLayout(int axis)
     {
-        SetLayoutInputForAxis(m_ContentHeight, m_ContentHeight, 0, 1);
+        float width = rectTransform.rect.width - padding.left - padding.right;
+        float height = rectTransform.rect.height - padding.top - padding.bottom;
+        float x = padding.left;
+        float y = padding.top;
+        float rowHeight = 0f;
+        float columnWidth = 0f;
+
+        for (int i = 0; i < rectChildren.Count; i++)
+        {
+            var item = rectChildren[i];
+            
+            var itemWidth = LayoutUtility.GetPreferredWidth(item);
+            var itemHeight = LayoutUtility.GetPreferredHeight(item);
+
+            if (mainAxis == Axis.Horizontal)
+            {
+                if (x + itemWidth > width)
+                {
+                    x = padding.left;
+                    y += rowHeight + spacingY;
+                    rowHeight = 0;
+                }
+
+                SetChildAlongAxis(item, 0, x, itemWidth);
+                SetChildAlongAxis(item, 1, y, itemHeight);
+
+                rowHeight = Mathf.Max(rowHeight, itemHeight);
+                x += itemWidth + spacingX;
+            }
+            else
+            {
+                if (y + itemHeight > height)
+                {
+                    y = padding.top;
+                    x += columnWidth + spacingX;
+                    columnWidth = 0;
+                }
+
+                SetChildAlongAxis(item, 0, x, itemWidth);
+                SetChildAlongAxis(item, 1, y, itemHeight);
+
+                columnWidth = Mathf.Max(columnWidth, itemWidth);
+                y += itemHeight + spacingY;
+            }
+        }
     }
 }
