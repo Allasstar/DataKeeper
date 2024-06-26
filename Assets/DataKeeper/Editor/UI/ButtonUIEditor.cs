@@ -25,13 +25,14 @@ namespace DataKeeper.Editor.UI
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
+            serializedObject.Update();
+            
             EditorGUILayout.Space();
             
             EditorGUILayout.PropertyField(m_textProperty);
 
             EditorGUILayout.Space();
 
-            serializedObject.Update();
             EditorGUILayout.PropertyField(m_OnClickProperty);
             serializedObject.ApplyModifiedProperties();
         }
