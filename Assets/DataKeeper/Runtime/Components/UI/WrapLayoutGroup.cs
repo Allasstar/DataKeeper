@@ -4,6 +4,7 @@ using UnityEngine.UI;
 namespace DataKeeper.Components.UI
 {
     [ExecuteInEditMode]
+    [AddComponentMenu("DataKeeper/UI/Wrap Layout Group")]
     public class WrapLayoutGroup : LayoutGroup
     {
         public enum Axis { Horizontal, Vertical }
