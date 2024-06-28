@@ -104,14 +104,10 @@ namespace DataKeeper.Components.UI
 
         public override void SetLayoutHorizontal()
         {
-            // SetLayoutHorizontal is called after CalculateLayoutInputHorizontal,
-            // so we don't need to do anything here as we've already set the horizontal layout in CalculateLayoutInputHorizontal.
         }
 
         public override void SetLayoutVertical()
         {
-            // SetLayoutVertical is called after CalculateLayoutInputVertical,
-            // so we don't need to do anything here as we've already set the vertical layout in CalculateLayoutInputHorizontal.
         }
     }
 }
