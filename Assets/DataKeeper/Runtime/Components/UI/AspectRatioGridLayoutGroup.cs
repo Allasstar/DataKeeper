@@ -17,68 +17,101 @@ namespace DataKeeper.Components.UI
         public float aspectRatio = 1f;
         public Vector2 spacing = Vector2.zero;
 
+        private float m_CellWidth;
+        private float m_CellHeight;
+
         public override void CalculateLayoutInputHorizontal()
         {
             base.CalculateLayoutInputHorizontal();
-    
+            
+            int childCount = rectChildren.Count;
+            if (childCount == 0) return;
+
             float parentWidth = rectTransform.rect.width;
             float parentHeight = rectTransform.rect.height;
 
-            float cellWidth, cellHeight;
-            int rows = fixedCount;
-            int columns = fixedCount;
-            
-
+            int rows, columns;
             if (layoutType == LayoutType.FixedRows)
             {
-                cellHeight = (parentHeight - padding.top - padding.bottom - spacing.y * (rows - 1)) / rows;
-                cellWidth = cellHeight / aspectRatio;
-                
-                for (int i = 0; i < rectChildren.Count; i++)
-                {
-                    int rowIndex = i % rows;
-                    int columnIndex = i / rows;
-        
-                    var item = rectChildren[i];
-        
-                    var xPos = padding.left + (cellWidth + spacing.x) * columnIndex;
-                    var yPos = padding.top + (cellHeight + spacing.y) * rowIndex;
-        
-                    SetChildAlongAxis(item, 0, xPos, cellWidth);
-                    SetChildAlongAxis(item, 1, yPos, cellHeight);
-                }
+                rows = fixedCount;
+                columns = Mathf.CeilToInt((float)childCount / fixedCount);
             }
             else // FixedColumns
             {
-                cellWidth = (parentWidth - padding.left - padding.right - spacing.x * (columns - 1)) / columns;
-                cellHeight = cellWidth * aspectRatio;
-                
-                for (int i = 0; i < rectChildren.Count; i++)
-                {
-                    int rowIndex = i / columns;
-                    int columnIndex = i % columns;
-        
-                    var item = rectChildren[i];
-        
-                    var xPos = padding.left + (cellWidth + spacing.x) * columnIndex;
-                    var yPos = padding.top + (cellHeight + spacing.y) * rowIndex;
-        
-                    SetChildAlongAxis(item, 0, xPos, cellWidth);
-                    SetChildAlongAxis(item, 1, yPos, cellHeight);
-                }
+                columns = fixedCount;
+                rows = Mathf.CeilToInt((float)childCount / fixedCount);
             }
+
+            float totalSpacingWidth = spacing.x * (columns - 1);
+            float totalSpacingHeight = spacing.y * (rows - 1);
+
+            if (layoutType == LayoutType.FixedRows)
+            {
+                m_CellHeight = (parentHeight - padding.vertical - totalSpacingHeight) / rows;
+                m_CellWidth = m_CellHeight / aspectRatio;
+            }
+            else // FixedColumns
+            {
+                m_CellWidth = (parentWidth - padding.horizontal - totalSpacingWidth) / columns;
+                m_CellHeight = m_CellWidth * aspectRatio;
+            }
+
+            for (int i = 0; i < childCount; i++)
+            {
+                int rowIndex = layoutType == LayoutType.FixedRows ? i % rows : i / columns;
+                int columnIndex = layoutType == LayoutType.FixedRows ? i / rows : i % columns;
+
+                var item = rectChildren[i];
+
+                var xPos = padding.left + (m_CellWidth + spacing.x) * columnIndex;
+                var yPos = padding.top + (m_CellHeight + spacing.y) * rowIndex;
+
+                SetChildAlongAxis(item, 0, xPos, m_CellWidth);
+                SetChildAlongAxis(item, 1, yPos, m_CellHeight);
+            }
+
+            // Set the preferred width and height
+            SetLayoutInputForAxis(
+                padding.horizontal + (m_CellWidth * columns) + (spacing.x * (columns - 1)),
+                padding.horizontal + (m_CellWidth * columns) + (spacing.x * (columns - 1)),
+                -1, 0);
         }
 
         public override void CalculateLayoutInputVertical()
         {
+            int childCount = rectChildren.Count;
+            if (childCount == 0) return;
+
+            int rows, columns;
+            if (layoutType == LayoutType.FixedRows)
+            {
+                rows = fixedCount;
+                columns = Mathf.CeilToInt((float)childCount / fixedCount);
+            }
+            else // FixedColumns
+            {
+                columns = fixedCount;
+                rows = Mathf.CeilToInt((float)childCount / fixedCount);
+            }
+
+            float totalSpacingHeight = spacing.y * (rows - 1);
+
+            float minHeight = padding.vertical + (m_CellHeight * rows) + totalSpacingHeight;
+            float preferredHeight = minHeight;
+
+            SetLayoutInputForAxis(minHeight, preferredHeight, -1, 1);
         }
 
         public override void SetLayoutHorizontal()
         {
+            // SetLayoutHorizontal is called after CalculateLayoutInputHorizontal,
+            // so we don't need to do anything here as we've already set the horizontal layout in CalculateLayoutInputHorizontal.
         }
 
         public override void SetLayoutVertical()
         {
+            // SetLayoutVertical is called after CalculateLayoutInputVertical,
+            // so we don't need to do anything here as we've already set the vertical layout in CalculateLayoutInputHorizontal.
         }
     }
 }
