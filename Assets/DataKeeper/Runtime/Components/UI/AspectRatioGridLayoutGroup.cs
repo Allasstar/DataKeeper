@@ -30,15 +30,15 @@ namespace DataKeeper.Components.UI
             float parentWidth = rectTransform.rect.width;
             float parentHeight = rectTransform.rect.height;
 
-            int rows, columns;
+            int rows = fixedCount;
+            int columns = fixedCount;
+            
             if (layoutType == LayoutType.FixedRows)
             {
-                rows = fixedCount;
                 columns = Mathf.CeilToInt((float)childCount / fixedCount);
             }
             else // FixedColumns
             {
-                columns = fixedCount;
                 rows = Mathf.CeilToInt((float)childCount / fixedCount);
             }
 
@@ -82,15 +82,15 @@ namespace DataKeeper.Components.UI
             int childCount = rectChildren.Count;
             if (childCount == 0) return;
 
-            int rows, columns;
+            int rows = fixedCount;
+            int columns = fixedCount;
+            
             if (layoutType == LayoutType.FixedRows)
             {
-                rows = fixedCount;
                 columns = Mathf.CeilToInt((float)childCount / fixedCount);
             }
             else // FixedColumns
             {
-                columns = fixedCount;
                 rows = Mathf.CeilToInt((float)childCount / fixedCount);
             }
 
