@@ -8,8 +8,8 @@ namespace DataKeeper.Components.UI
     {
         public enum LayoutType
         {
-            FixedRows,
-            FixedColumns
+            FixedRows = 0,
+            FixedColumns = 1
         }
 
         public LayoutType layoutType = LayoutType.FixedRows;
@@ -48,12 +48,12 @@ namespace DataKeeper.Components.UI
             if (layoutType == LayoutType.FixedRows)
             {
                 m_CellHeight = (parentHeight - padding.vertical - totalSpacingHeight) / rows;
-                m_CellWidth = m_CellHeight / aspectRatio;
+                m_CellWidth = m_CellHeight * aspectRatio;
             }
             else // FixedColumns
             {
                 m_CellWidth = (parentWidth - padding.horizontal - totalSpacingWidth) / columns;
-                m_CellHeight = m_CellWidth * aspectRatio;
+                m_CellHeight = m_CellWidth / aspectRatio;
             }
 
             for (int i = 0; i < childCount; i++)
