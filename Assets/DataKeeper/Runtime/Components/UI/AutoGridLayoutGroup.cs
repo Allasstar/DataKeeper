@@ -86,8 +86,6 @@ namespace DataKeeper.Components.UI
         /// </remarks>
         public Axis startAxis { get { return m_StartAxis; } set { SetProperty(ref m_StartAxis, value); } }
 
-        [SerializeField] protected RectTransform m_gridContainer;
-
         [SerializeField, ReadOnlyInspector] protected Vector2 m_CellSize = new Vector2(100, 100);
 
         [SerializeField] protected Vector2 m_Spacing = Vector2.zero;
@@ -107,6 +105,7 @@ namespace DataKeeper.Components.UI
         /// </remarks>
         public Constraint constraint { get { return m_Constraint; } set { SetProperty(ref m_Constraint, value); } }
 
+        
         [SerializeField] protected int m_ConstraintCount = 2;
 
         /// <summary>
@@ -114,8 +113,9 @@ namespace DataKeeper.Components.UI
         /// </summary>
         public int constraintCount { get { return m_ConstraintCount; } set { SetProperty(ref m_ConstraintCount, Mathf.Max(1, value)); } }
 
+        
         [SerializeField] protected float m_AspectRatio = 1;
-        public float aspectRatio { get { return m_AspectRatio; } set { SetProperty(ref m_AspectRatio, value); } }
+        public float aspectRatio { get { return m_AspectRatio; } set { SetProperty(ref m_AspectRatio, Mathf.Max(0.001f, value)); } }
 
         protected AutoGridLayoutGroup()
         {}
@@ -125,10 +125,11 @@ namespace DataKeeper.Components.UI
         {
             base.OnValidate();
             constraintCount = constraintCount;
+            aspectRatio = aspectRatio;
         }
 
         #endif
-        
+
         /// <summary>
         /// Called by the layout system to calculate the horizontal layout size.
         /// Also see ILayoutElement
@@ -137,46 +138,32 @@ namespace DataKeeper.Components.UI
         {
             base.CalculateLayoutInputHorizontal();
 
-            if (m_gridContainer == null)
-            {
-                m_CellSize.x = 100f;
-                m_CellSize.y = 100f;
-            }
-            else
-            {
-                if (constraint == Constraint.FixedColumnCount)
-                {
-                    m_CellSize.x = m_gridContainer.rect.width - (spacing.x * (constraintCount - 1) + padding.horizontal);
-                    m_CellSize.x /= constraintCount;
-                    m_CellSize.y = m_CellSize.x / aspectRatio;
-                }
-                else if (constraint == Constraint.FixedRowCount)
-                {
-                    m_CellSize.y = m_gridContainer.rect.height - (spacing.y * (constraintCount - 1) + padding.vertical);
-                    m_CellSize.y /= constraintCount;
-                    
-                    m_CellSize.x = m_CellSize.y * aspectRatio;
-                }
-
-                m_CellSize.x = Mathf.Max(0, m_CellSize.x);
-                m_CellSize.y = Mathf.Max(0, m_CellSize.y);
-            }
-
             int minColumns = 0;
             int preferredColumns = 0;
             if (m_Constraint == Constraint.FixedColumnCount)
             {
                 minColumns = preferredColumns = m_ConstraintCount;
+                
+                m_CellSize.x = rectTransform.rect.width - (spacing.x * (constraintCount - 1) + padding.horizontal);
+                m_CellSize.x /= constraintCount;
+                m_CellSize.y = m_CellSize.x / aspectRatio;
             }
             else if (m_Constraint == Constraint.FixedRowCount)
             {
                 minColumns = preferredColumns = Mathf.CeilToInt(rectChildren.Count / (float)m_ConstraintCount - 0.001f);
+                
+                m_CellSize.y = rectTransform.rect.height - (spacing.y * (constraintCount - 1) + padding.vertical);
+                m_CellSize.y /= constraintCount;
+                m_CellSize.x = m_CellSize.y * aspectRatio;
             }
             else
             {
                 minColumns = 1;
                 preferredColumns = Mathf.CeilToInt(Mathf.Sqrt(rectChildren.Count));
             }
+            
+            m_CellSize.x = Mathf.Max(0, m_CellSize.x);
+            m_CellSize.y = Mathf.Max(0, m_CellSize.y);
 
             SetLayoutInputForAxis(
                 padding.horizontal + (m_CellSize.x + spacing.x) * minColumns - spacing.x,
