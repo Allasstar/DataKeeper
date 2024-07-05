@@ -4781,19 +4781,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 28
-    m_Right: 160
-    m_Top: 69
-    m_Bottom: 47
+    m_Left: 33
+    m_Right: 33
+    m_Top: 33
+    m_Bottom: 33
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_gridContainer: {fileID: 30919185}
-  m_CellSize: {x: 113.64, y: 81.17143}
-  m_Spacing: {x: 41.47, y: 21.55}
+  m_CellSize: {x: 829.4148, y: 460.786}
+  m_Spacing: {x: 33, y: 33}
   m_Constraint: 0
   m_ConstraintCount: 2
-  m_AspectRatio: 1.4
+  m_AspectRatio: 1.8
 --- !u!1 &824442269
 GameObject:
   m_ObjectHideFlags: 0
@@ -6672,7 +6671,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 54.65
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7132,7 +7131,6 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_gridContainer: {fileID: 0}
   m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 33, y: 33}
   m_Constraint: 1
@@ -10475,7 +10473,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40.2
+  m_fontSize: 29.5
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
