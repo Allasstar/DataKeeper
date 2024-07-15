@@ -32,7 +32,7 @@ namespace DataKeeper.ActCore
         {
             if (time == 0)
             {
-                yield return new WaitForEndOfFrame();
+                yield return null;
             }
             else if (time > 0)
             {
