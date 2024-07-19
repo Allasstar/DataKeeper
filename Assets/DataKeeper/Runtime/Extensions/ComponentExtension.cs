@@ -15,5 +15,22 @@ namespace DataKeeper.Extensions
             if (component == null) return;
             component.gameObject.SetActive(isActive);
         }
+
+        public static bool TryGetComponent<T>(this Component component, out T result) where T : Component
+        {
+            result = component.GetComponent<T>();
+            return result != null;
+        }
+
+        public static bool HasComponent<T>(this Component component) where T : Component
+        {
+            return component.GetComponent<T>() != null;
+        }
+
+        public static T GetOrAddComponent<T>(this Component component) where T : Component
+        {
+            var existingComponent = component.GetComponent<T>();
+            return existingComponent != null ? existingComponent : component.gameObject.AddComponent<T>();
+        }
     }
 }
