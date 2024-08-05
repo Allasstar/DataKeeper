@@ -6,6 +6,21 @@ namespace DataKeeper.Generic
 {
     public class DynamicObjectRegistry<TValue> : Container<TValue> where TValue : class
     {
+        private static Transform _root;
+        
+        protected static Transform Root
+        {
+            get
+            {
+                if (_root == null)
+                {
+                    _root = new GameObject("[DataKeeper Container]").transform;
+                    UnityEngine.Object.DontDestroyOnLoad(_root);
+                }
+                return _root;
+            }
+        }
+        
         public T GetOrInstantiate<T>(string id) where T : TValue, new()
         {
             if (_container.TryGetValue(id, out TValue value) && value is T typedValue)
