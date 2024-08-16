@@ -27,6 +27,15 @@ public class DamagePlayer : MonoBehaviour
     
     private void Damage()
     {
+        if (_value > 0)
+        {
+            GameLog.Instance.Heal(_value.ToString());
+        }
+        else
+        {
+            GameLog.Instance.Damage(_value.ToString());
+        }
+        
         _playerData.PlayerHealth.Value += _value;
     }
 }
