@@ -1,9 +1,8 @@
 using System.Reflection;
-using DataKeeper.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DataKeeper.Components.UI
+namespace DataKeeper.UI
 {
     [AddComponentMenu("DataKeeper/UI/Selectable UI")]
     [ExecuteAlways]

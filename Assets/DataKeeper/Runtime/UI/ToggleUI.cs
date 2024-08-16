@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace DataKeeper.Components.UI
+namespace DataKeeper.UI
 {
     [AddComponentMenu("DataKeeper/UI/Toggle UI")]
     [RequireComponent(typeof(RectTransform))]

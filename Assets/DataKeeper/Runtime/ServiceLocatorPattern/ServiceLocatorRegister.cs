@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using DataKeeper.ServiceLocatorPattern;
 using UnityEngine;
 
-namespace DataKeeper.Components
+namespace DataKeeper.ServiceLocatorPattern
 {
     [DefaultExecutionOrder(-10000)]
     [AddComponentMenu("DataKeeper/Service Locator Register", 0)]

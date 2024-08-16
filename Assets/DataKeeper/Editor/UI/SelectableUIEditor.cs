@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using DataKeeper.Components.UI;
+using DataKeeper.UI;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor.AnimatedValues;

@@ -1,4 +1,4 @@
-using DataKeeper.Components.UI;
+using DataKeeper.UI;
 using UnityEditor;
 using UnityEditor.UI;
 

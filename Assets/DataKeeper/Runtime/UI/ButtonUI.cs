@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
-namespace DataKeeper.Components.UI
+namespace DataKeeper.UI
 {
     [AddComponentMenu("DataKeeper/UI/Button UI")]
     [RequireComponent(typeof(RectTransform))]

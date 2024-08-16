@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DataKeeper.Components.UI
+namespace DataKeeper.UI
 {
     [AddComponentMenu("DataKeeper/UI/Aspect Ratio Grid Layout Group")]
     public class AspectRatioGridLayoutGroup : LayoutGroup

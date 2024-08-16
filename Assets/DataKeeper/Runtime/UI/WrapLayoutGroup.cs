@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DataKeeper.Components.UI
+namespace DataKeeper.UI
 {
     [ExecuteInEditMode]
     [AddComponentMenu("DataKeeper/UI/Wrap Layout Group")]

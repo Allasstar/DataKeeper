@@ -1,7 +1,6 @@
-using DataKeeper.Attributes;
 using UnityEngine;
 
-namespace DataKeeper.Components.UI
+namespace DataKeeper.UI
 {
     [AddComponentMenu("DataKeeper/UI/Safe Area UI")]
     [RequireComponent(typeof(RectTransform))]

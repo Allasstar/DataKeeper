@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace DataKeeper.Components.UI
+namespace DataKeeper.UI
 {
     public class ResizeHandle : MonoBehaviour, IDragHandler, IPointerDownHandler
     {

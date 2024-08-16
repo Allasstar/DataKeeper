@@ -2,7 +2,7 @@ using DataKeeper.Attributes;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DataKeeper.Components.UI
+namespace DataKeeper.UI
 {
     [AddComponentMenu("DataKeeper/UI/Auto Grid Layout Group")]
     /// <summary>
