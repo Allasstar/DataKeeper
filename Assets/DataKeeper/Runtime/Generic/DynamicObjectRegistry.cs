@@ -1,10 +1,9 @@
 using System;
-using DataKeeper.Generic.Base;
 using UnityEngine;
 
 namespace DataKeeper.Generic
 {
-    public class DynamicObjectRegistry<TValue> : Container<TValue> where TValue : class
+    public class DynamicObjectRegistry<TValue> : Register<TValue> where TValue : class
     {
         private static Transform _root;
         
