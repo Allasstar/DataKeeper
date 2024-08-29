@@ -1,7 +1,7 @@
 using DataKeeper.SingletonPattern;
 using UnityEngine;
 
-public class GameLog : Singleton<GameLog>
+public class GameLog : MonoSingleton<GameLog>
 {
     public void Heal(string log)
     {
