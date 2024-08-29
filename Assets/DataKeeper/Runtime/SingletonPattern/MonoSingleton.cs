@@ -1,3 +1,4 @@
+using DataKeeper.Extensions;
 using UnityEngine;
 
 namespace DataKeeper.SingletonPattern
@@ -13,16 +14,12 @@ namespace DataKeeper.SingletonPattern
         
         private static T CreateInstance()
         {
-            var go = new GameObject($"{typeof(T).Name} (Singleton)");
-            go.transform.parent = Container;
-            return go.AddComponent<T>();
+            return MonoFactory.Create<T>($"{typeof(T).Name} (Singleton)", Container);
         }
 
         private static Transform CreateContainer()
         {
-            var go = new GameObject($"[Singletons]");
-            DontDestroyOnLoad(go);
-            return go.transform;
+            return MonoFactory.Create($"[Singletons]", true).transform;
         }
     }
 }
