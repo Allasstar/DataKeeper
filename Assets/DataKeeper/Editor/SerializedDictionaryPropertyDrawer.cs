@@ -103,8 +103,8 @@ namespace DataKeeper.Editor
                 x = keysRect.x + keysRect.width + 20
             };
 
-            EditorGUI.LabelField(keysRect, new GUIContent("Keys"));
-            EditorGUI.LabelField(valuesRect, new GUIContent("Values"));
+            EditorGUI.LabelField(keysRect, new GUIContent("Dictionary"));
+            // EditorGUI.LabelField(valuesRect, new GUIContent("Values"));
         }
 
         float GetElementHeight(int index)
@@ -116,7 +116,7 @@ namespace DataKeeper.Editor
             var key = pair.FindPropertyRelative("key");
             var value = pair.FindPropertyRelative("value");
 
-            return Mathf.Max(EditorGUI.GetPropertyHeight(key), EditorGUI.GetPropertyHeight(value));
+            return EditorGUI.GetPropertyHeight(key) + EditorGUI.GetPropertyHeight(value) + EditorGUIUtility.standardVerticalSpacing;
         }
 
         void DrawElement(Rect rect, int index, bool isActive, bool isFocused)
@@ -137,41 +137,30 @@ namespace DataKeeper.Editor
             if (!_list.draggable)
                 rect.xMin += 15f;
 
-            var keyRect = new Rect()
+            var keyRect = new Rect(rect)
             {
-                x = rect.x,
-                y = rect.y + .5f,
-                width = rect.width * .2f,
                 height = EditorGUI.GetPropertyHeight(key)
             };
 
-            var arrowRect = new Rect(keyRect)
+            var valueRect = new Rect(rect)
             {
-                x = keyRect.xMax,
-                width = 35,
-            };
-
-            var valueRect = new Rect()
-            {
-                x = arrowRect.xMax,
-                y = arrowRect.y,
-                width = rect.width - keyRect.width - arrowRect.width,
+                y = keyRect.yMax + EditorGUIUtility.standardVerticalSpacing,
                 height = EditorGUI.GetPropertyHeight(value)
             };
 
             if (value.hasVisibleChildren)
                 valueRect.xMin += 15f;
 
+            // Draw key
+            EditorGUI.LabelField(keyRect, "Key:");
+            keyRect.xMin += 30f;
             if (key.propertyType == SerializedPropertyType.Enum)
                 EditorGUI.LabelField(keyRect, key.enumDisplayNames[key.enumValueIndex]);
             else
                 EditorGUI.PropertyField(keyRect, key, GUIContent.none, true);
 
-            EditorGUI.LabelField(arrowRect, new GUIContent("⟹"), new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter });
-
-            EditorGUIUtility.labelWidth /= 2f;
-            EditorGUI.PropertyField(valueRect, value, value.hasVisibleChildren ? new GUIContent("Value") : GUIContent.none, true);
-            EditorGUIUtility.labelWidth = 0f;
+            // Draw value
+            EditorGUI.PropertyField(valueRect, value, new GUIContent("Value"), true);
         }
 
         void DrawElementBackground(Rect rect, int index, bool isActive, bool isFocused)
