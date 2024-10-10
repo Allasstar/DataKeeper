@@ -20,11 +20,12 @@ namespace DataKeeper.ActCore
     
         public static IEnumerator OneSecondUpdate(Action callback)
         {
+            var wait = new WaitForSeconds(1);
             
             while (true)
             {
                 callback?.Invoke();
-                yield return new WaitForSeconds(1);
+                yield return wait;
             }
         }
     
@@ -64,11 +65,41 @@ namespace DataKeeper.ActCore
             
             while (time <= duration)
             {
-                yield return new WaitForEndOfFrame();
+                yield return null;
                 time += Time.deltaTime;
                 delta?.Invoke(Time.deltaTime);
             }
             
+            onComplete?.Invoke();
+        }
+        
+        public static IEnumerator DeltaValue(float value, float duration, Action<float> deltaOfValue, Action onComplete = null)
+        {
+            float elapsedTime = 0f;
+            float lastValue = 0f;
+
+            while (elapsedTime < duration)
+            {
+                yield return null;
+                elapsedTime += Time.deltaTime;
+
+                float currentValue = Mathf.Lerp(0, value, elapsedTime / duration);
+                float delta = currentValue - lastValue;
+
+                if (delta != 0)
+                {
+                    deltaOfValue?.Invoke(delta);
+                }
+
+                lastValue = currentValue;
+            }
+
+            float finalDelta = value - lastValue;
+            if (finalDelta != 0)
+            {
+                deltaOfValue?.Invoke(finalDelta);
+            }
+
             onComplete?.Invoke();
         }
         
@@ -79,7 +110,7 @@ namespace DataKeeper.ActCore
             
             while (time <= duration)
             {
-                yield return new WaitForEndOfFrame();
+                yield return null;
                 time += Time.deltaTime;
                 
                 value?.Invoke(Lerp.Float(from, to, time / duration));
@@ -96,13 +127,56 @@ namespace DataKeeper.ActCore
             
             while (time <= duration)
             {
-                yield return new WaitForEndOfFrame();
+                yield return null;
                 time += Time.deltaTime;
                 
                 value?.Invoke(ease(time / duration, from, to));
             }
             
             value?.Invoke(to);
+            onComplete?.Invoke();
+        }
+        
+        public static IEnumerator Period(float from, float to, float duration, float callbackPeriod, Action<float> value, Action callback, Action onComplete)
+        {
+            var time = 0f;
+            var lastCallbackTime = 0f;
+            value?.Invoke(from);
+    
+            while (time <= duration)
+            {
+                yield return null;
+                time += Time.deltaTime;
+        
+                float currentValue = Lerp.Float(from, to, time / duration);
+                value?.Invoke(currentValue);
+        
+                if (time - lastCallbackTime >= callbackPeriod)
+                {
+                    callback?.Invoke();
+                    lastCallbackTime = time;
+                }
+            }
+    
+            callback?.Invoke();
+            value?.Invoke(to);
+            onComplete?.Invoke();
+        }
+
+        public static IEnumerator Timer(float duration, Action<float> value, Action onComplete)
+        {
+            var time = 0f;
+            value?.Invoke(duration);
+            
+            while (time <= duration)
+            {
+                yield return null;
+                time += Time.deltaTime;
+                
+                value?.Invoke(Lerp.Float(duration, 0, time / duration));
+            }
+            
+            value?.Invoke(0);
             onComplete?.Invoke();
         }
     }

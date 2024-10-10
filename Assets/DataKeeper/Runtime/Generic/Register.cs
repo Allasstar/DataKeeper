@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,6 +15,19 @@ namespace DataKeeper.Generic
         public virtual bool Contains<T>() => _container.ContainsKey(typeof(T).Name);
         public virtual bool Contains(string id) => _container.ContainsKey(id);
         
+        public T Find<T>(Func<T, bool> predicate) where T : class, TValue
+        {
+            return _container.Values
+                .OfType<T>()
+                .FirstOrDefault(predicate);
+        }
+
+        public IEnumerable<T> FindAll<T>(Func<T, bool> predicate) where T : class, TValue
+        {
+            return _container.Values
+                .OfType<T>()
+                .Where(predicate);
+        }
         
         public void Reg(TValue value, string id)
         {

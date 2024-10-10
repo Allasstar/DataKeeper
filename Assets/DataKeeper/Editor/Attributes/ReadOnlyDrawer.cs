@@ -23,6 +23,9 @@ namespace DataKeeper.Editor.Attributes
 
             // Drawing Property
             EditorGUI.PropertyField(position, property, label);
+            
+            // Enabling edit for property
+            GUI.enabled = true;
         }
     }
 }

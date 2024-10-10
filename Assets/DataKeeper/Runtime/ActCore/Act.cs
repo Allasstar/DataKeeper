@@ -46,17 +46,25 @@ namespace DataKeeper.ActCore
 
         public static Coroutine OneSecondUpdate(Action callback) => StartCoroutine(ActEnumerator.OneSecondUpdate(callback));
 
-        public static void One(float duration, Action<float> value, Action onComplete = null) => StartCoroutine(ActEnumerator.Float(0f, 1f, duration, value, onComplete));
-        public static void Int(int from, int to, float duration, Action<int> value, Action onComplete = null) => StartCoroutine(ActEnumerator.Int(from, to, duration, value, onComplete));
+        public static void One(float duration, Action<float> value = null, Action onComplete = null) => StartCoroutine(ActEnumerator.Float(0f, 1f, duration, value, onComplete));
+        public static void Int(int from, int to, float duration, Action<int> value = null, Action onComplete = null) => StartCoroutine(ActEnumerator.Int(from, to, duration, value, onComplete));
 
         
-        public static void Delta(float duration, Action<float> delta, Action onComplete = null) => StartCoroutine(ActEnumerator.Delta(duration, delta, onComplete));
+        public static void Delta(float duration, Action<float> delta = null, Action onComplete = null) => StartCoroutine(ActEnumerator.Delta(duration, delta, onComplete));
 
-        public static void Float(float from, float to, float duration, Action<float> value, Action onComplete = null) => 
+        public static void Float(float from, float to, float duration, Action<float> value = null, Action onComplete = null) => 
             StartCoroutine(ActEnumerator.Float(from, to, duration, value, onComplete));
-        public static void Float(float from, float to, float duration, Func<float, float, float, FloatEase> ease, Action<float> value, Action onComplete) =>
+        public static void Float(float from, float to, float duration, Func<float, float, float, FloatEase> ease, Action<float> value = null, Action onComplete = null) =>
             StartCoroutine(ActEnumerator.Float(from, to, duration, ease, value, onComplete));
-
+        
+        public static void Period(float from, float to, float duration, float callbackPeriod, Action<float> value = null, Action callback = null, Action onComplete = null) =>
+            StartCoroutine(ActEnumerator.Period(from, to, duration, callbackPeriod, value, callback, onComplete));
+        
+        public static void Timer(float duration, Action<float> value = null, Action onComplete = null) =>
+            StartCoroutine(ActEnumerator.Timer(duration, value, onComplete));
+        
+        public static void DeltaValue(float value, float duration, Action<float> deltaOfValue = null, Action onComplete = null) =>
+            StartCoroutine(ActEnumerator.DeltaValue(value, duration, deltaOfValue, onComplete));
         
         /// <summary>
         /// If time less than 0 - wait 0 seconds. If time equals 0 - wait 1 frame. If time greater than 0 - wait in seconds.
